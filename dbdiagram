@@ -1,7 +1,7 @@
 Table groups {
   id integer [primary key]
   uuid varchar [not null, unique]
-  group_name varchar [not null,note:"グループ名"]
+  name varchar [not null,note:"グループ名"]
   outing_schedule timestamp [not null,note: "ご飯日程"]
   created_at timestamp
   updated_at timestamp
@@ -9,10 +9,10 @@ Table groups {
 
 Table shops {
   id integer [primary key]
-  shop_name varchar [not null,note: "お店の名前"]
+  name varchar [not null,note: "お店の名前"]
   address varchar [note: "お店の住所"]
-  shop_url varchar [note: "お店のURL"]
-  shop_status integer [not null,note: "0:候補、1:行き先決定"]
+  url varchar [note: "お店のURL"]
+  status integer [not null,note: "0:候補、1:行き先決定"]
   group_id integer [not null, ref: > groups.id]
   created_at timestamp
   updated_at timestamp
@@ -30,7 +30,7 @@ Table votes {
 
 Table questions {
   id integer [primary key]
-  question_text varchar [not null,note: "質問内容"]
+  text varchar [not null,note: "質問内容"]
   created_at timestamp
   updated_at timestamp
 }
@@ -40,7 +40,7 @@ Table answers{
   question_id interger [not null,ref: > questions.id]
   group_id integer [not null,ref: > groups.id]
   user_token varchar [not null, note: "ユーザーを一意に識別するID"]
-  answer varchar [note: "ユーザーの回答"]
+  content varchar [note: "ユーザーの回答"]
   created_at timestamp
   updated_at timestamp
 }
