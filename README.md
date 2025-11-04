@@ -78,3 +78,7 @@ Xでの発信や、友人間でシェアされることで、ユーザーの獲�
 
 ## 画面遷移図
 [Figmaで見る](https://www.figma.com/design/9BqzpNX9o0Js9g06tGY1fk/%E3%81%94%E9%A3%AF%E3%81%84%E3%81%93%EF%BC%81%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=0-1&t=0lA5gm2XNVBG1miI-1)
+
+## ER図
+![ER図](db_gohaniko.svg)
+- 詳細は、[dbdiagramファイル](dbdiagram)で確認できます
