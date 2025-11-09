@@ -1,5 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap');
 @import "tailwindcss";
+
 @plugin "daisyui" {
   themes: all;
   default: "caramellatte";
 }
+
+@theme {
+    --font-darumadrop: "Darumadrop One", sans-serif;
+    --color-header: #F8BE66;
+}
+
+@layer components {
+  .header-color {
+    background-color: var(--color-header);
+  }
+}
+
