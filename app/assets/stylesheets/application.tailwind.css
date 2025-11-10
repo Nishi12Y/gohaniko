@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap');
 @import "tailwindcss";
 
-@plugin "daisyui" {
-  themes: all;
-  default: "caramellatte";
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "caramellatte";
+  default: true;
+  --color-primary: #F19594;
+  /* --color-primary: #FFF7ED: */
 }
 
 @theme {
