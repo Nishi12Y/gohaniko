@@ -1,0 +1,78 @@
+<!-- app/views/stores/index.html.erb -->
+<!DOCTYPE html>
+<html lang="ja" data-theme="caramellatte">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ごはんいこ</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+</head>
+<body class="bg-base-200 min-h-screen">
+  <!-- メインコンテンツ -->
+  <main class="container mx-auto px-4 py-6 max-w-md">
+    <!-- タイトルセクション -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold mb-4">タイトル名</h2>
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <button class="btn btn-primary text-white">候補登録</button>
+        <!-- TODO:色の適用原因調査 -->
+        <button class="btn btn-neutral">投票</button>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <!-- TODO:色の適用原因調査 -->
+        <button class="btn btn-neutral">みんなの意見</button>
+        <button class="btn btn-primary text-white" disabled="disabled">投票結果</button>
+      </div>
+    </div>
+
+    <!-- 候補一覧 -->
+    <div class="mb-4">
+      <h3 class="text-xl font-bold mb-4">候補一覧</h3>
+      
+      <!-- 候補カード1 -->
+      <div class="card bg-base-100 shadow-md mb-4">
+        <div class="card-body p-4">
+          <ul class="text-sm space-y-1 mb-3">
+            <li>・店舗名</li>
+            <li>・住所</li>
+            <li>・URL</li>
+          </ul>
+          <div class="bg-warning aspect-[4/3] rounded flex items-center justify-center text-warning-content">
+            画像
+          </div>
+        </div>
+      </div>
+
+      <!-- 候補カード2 -->
+      <div class="card bg-base-100 shadow-md mb-4">
+        <div class="card-body p-4">
+          <ul class="text-sm space-y-1 mb-3">
+            <li>・店舗名</li>
+            <li>・住所</li>
+            <li>・URL</li>
+          </ul>
+          <div class="bg-warning aspect-[4/3] rounded flex items-center justify-center text-warning-content">
+            画像
+          </div>
+        </div>
+      </div>
+
+      <!-- 候補カード3 -->
+      <div class="card bg-base-100 shadow-md mb-4">
+        <div class="card-body p-4">
+          <ul class="text-sm space-y-1 mb-3">
+            <li>・店舗名</li>
+            <li>・住所</li>
+            <li>・URL</li>
+          </ul>
+          <div class="bg-warning aspect-[4/3] rounded flex items-center justify-center text-warning-content">
+            画像
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
