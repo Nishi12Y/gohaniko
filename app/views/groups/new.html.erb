@@ -1,0 +1,36 @@
+<div class="min-h-screen bg-base-200 p-4">
+  <div class="max-w-md mx-auto">
+    <!-- フォームカード -->
+    <div class="bg-base-100 p-6 rounded-b-lg shadow-lg">
+      <%= form_with model: @group do |f| %>
+        
+        <!-- グループタイトル -->
+        <div class="form-control mb-6">
+          <label class="label">
+            <span class="label-text font-bold text-base">グループタイトル</span>
+          </label>
+          <%= f.text_field :name, 
+              placeholder: "いつものメンバー",
+              class: "input input-bordered w-full bg-base-200" %>
+        </div>
+
+        <!-- ご飯日付 -->
+        <div class="form-control mb-6">
+          <label class="label">
+            <span class="label-text font-bold text-base">ご飯日付</span>
+          </label>
+          <%= f.text_field :outing_schedule, 
+              placeholder: "mm/dd",
+              class: "input input-bordered w-full bg-base-200" %>
+        </div>
+
+        <!-- 送信ボタン -->
+        <div class="form-control">
+          <%= f.submit "リンクを作成", 
+              class: "btn btn-primary w-full text-white text-lg rounded-full normal-case hover:pink-custom-hover border-0" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>

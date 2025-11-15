@@ -1,0 +1,68 @@
+<div class="min-h-screen">
+  <%# TODO:URLコピーエリアのレイアウト微調整 %>
+  <!-- フラッシュメッセージ -->
+  <div id="flash-message" class="hidden fixed top-0 left-0 right-0 z-50">
+    <div class="alert shadow-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      <span>URLをコピーしました！</span>
+    </div>
+  </div>
+  <!-- メインコンテンツ -->
+  <div class="hero">
+    <div class="hero-content w-full px-4">
+      <div class="card bg-base-100 shadow-2xl w-full max-w-lg bg-white mx-auto">
+        <div class="card-body items-center text-center p-6 sm:p-12">
+          
+          <!-- メッセージ -->
+          <h2 class="card-title text-xl sm:text-2xl font-bold mb-4">
+            グループを作成しました。
+          </h2>
+          
+          <p class="text-base-content mb-6">
+            URLをコピーして、<br>
+            ごはんメンバーに共有しましょう
+          </p>
+
+          <!-- URL表示とコピーボタン -->
+          <div class="w-full mb-6">
+            <div class="flex items-center justify-between gap-2 border-2 border-amber-300 rounded-full px-3 sm:px-6 py-3">
+              <span class="text-left text-base-content text-xs sm:text-base truncate overflow-hidden min-w-0 " id="group-url"><%= group_url(@group.uuid) %></span>
+              <button
+                id="copy-btn"
+                class="btn btn-sm btn-primary hover:pink-custom-hover text-white border-0 rounded-full normal-case px-4 sm:px-6 flex-shrink-0 ml-auto">
+                コピー
+              </button>
+            </div>
+          </div>
+
+          <!-- グループページへボタン -->
+          <div class="card-actions justify-center w-full">
+            <%= link_to "グループページへ", group_path(@group), class: "btn btn-wide bg-stone-400 hover:bg-stone-500 text-white text-base sm:text-lg border-0 normal-case" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// イベントリスナーで関数を登録
+const copy_btn = document.getElementById('copy-btn');
+const group_url = document.getElementById('group-url').textContent;
+const flash_message = document.getElementById('flash-message');
+
+copy_btn.addEventListener('click', () => {
+  const copyBtn = document.getElementById('copy-btn');
+  // copyBtn.addEventListener('click', copyToClipboard);
+  navigator.clipboard.writeText(group_url).then(() => {
+    // フラッシュメッセージを表示
+    flash_message.classList.remove('hidden');
+    
+    // 3秒後にフラッシュメッセージを非表示
+    setTimeout(() => {
+      flash_message.classList.add('hidden');
+    }, 3000);
+    
+  });
+});
+</script>

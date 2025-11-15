@@ -1,20 +1,29 @@
 <!-- app/views/stores/index.html.erb -->
-<!DOCTYPE html>
-<html lang="ja" data-theme="caramellatte">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ごはんいこ</title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-</head>
 <body class="bg-base-200 min-h-screen">
   <!-- メインコンテンツ -->
   <main class="container mx-auto px-4 py-6 max-w-md">
+    <!-- フラッシュメッセージ -->
+    <div id="flash-message" class="hidden fixed top-0 left-0 right-0 z-50">
+      <div class="alert shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>URLをコピーしました！</span>
+      </div>
+    </div>
     <!-- タイトルセクション -->
     <div class="mb-6">
-      <h2 class="text-2xl font-bold mb-4">タイトル名</h2>
+      <div class="flex items-center gap-2 mb-4">
+        <h2 class="text-2xl font-bold"><%=@group.name %></h2>
+        <button 
+          id="copyButton"
+          class="btn btn-ghost btn-sm btn-circle"
+          onclick="copyGroupName()"
+          title="コピーボタン"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </button>
+      </div>
       <div class="grid grid-cols-2 gap-3 mb-4">
         <button class="btn btn-primary text-white">候補登録</button>
         <!-- TODO:色の適用原因調査 -->
@@ -74,5 +83,40 @@
       </div>
     </div>
   </main>
+
+  <script>
+
+    const groupId = 'https://gohaniko.onrender.com/<%= j @group.uuid %>';
+    const copy_btn = document.getElementById('copyButton');
+    const flash_message = document.getElementById('flash-message');
+
+    copy_btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(groupId).then(() => {
+        // コピー成功時のフィードバック
+        const originalHTML = copy_btn.innerHTML;
+        copy_btn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        `;
+        // フラッシュメッセージを表示
+        flash_message.classList.remove('hidden');
+        
+        // 3秒後にフラッシュメッセージを非表示
+        setTimeout(() => {
+          flash_message.classList.add('hidden');
+        }, 3000);
+        
+        setTimeout(() => {
+          copy_btn.innerHTML = originalHTML;
+        }, 1500);
+      }).catch(err => {
+        console.error('コピーに失敗しました:', err);
+        alert('コピーに失敗しました');
+      });
+    });
+    function copyGroupName() {
+    }
+  </script>
 </body>
 </html>
