@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_11_221803) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_15_233211) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,4 +22,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_11_221803) do
     t.datetime "updated_at", null: false
     t.index ["uuid"], name: "index_groups_on_uuid", unique: true
   end
+
+  create_table "shops", force: :cascade do |t|
+    t.string "name", null: false, comment: "お店の名前"
+    t.string "address", comment: "お店の住所"
+    t.string "url", comment: "お店のURL"
+    t.integer "status", null: false, comment: "0:候補、1:行き先決定"
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_shops_on_group_id"
+  end
+
+  add_foreign_key "shops", "groups"
 end
