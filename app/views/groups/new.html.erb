@@ -2,14 +2,14 @@
   <div class="max-w-md mx-auto">
     <!-- フォームカード -->
     <div class="bg-base-100 p-6 rounded-b-lg shadow-lg">
-      <%= form_with url: "#", method: :post, local: true do |f| %>
+      <%= form_with model: @group do |f| %>
         
         <!-- グループタイトル -->
         <div class="form-control mb-6">
           <label class="label">
             <span class="label-text font-bold text-base">グループタイトル</span>
           </label>
-          <%= f.text_field :group_title, 
+          <%= f.text_field :name, 
               placeholder: "いつものメンバー",
               class: "input input-bordered w-full bg-base-200" %>
         </div>
@@ -33,3 +33,4 @@
       <% end %>
     </div>
   </div>
+</div>
