@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "posts#index"
 
-  resources :groups, param: :uuid, only: [:new, :create, :show] do
+  resources :groups, param: :uuid, only: [ :new, :create, :show ] do
   get :success, on: :member
 end
 end

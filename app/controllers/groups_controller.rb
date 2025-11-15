@@ -1,9 +1,8 @@
 class GroupsController < ApplicationController
-    
     def new
         @group = Group.new
     end
-    
+
     def show
         @group = Group.find_by(uuid: params[:uuid])
     end
@@ -14,7 +13,7 @@ class GroupsController < ApplicationController
         puts(@group.uuid)
 
         if @group.save
-            redirect_to success_group_path(@group),success: t('作成完了')
+            redirect_to success_group_path(@group), success: t("作成完了")
         else
             render :new, status: :unprocessable_entity
         end
