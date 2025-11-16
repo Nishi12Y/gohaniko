@@ -1,0 +1,45 @@
+<body class="bg-base-200 min-h-screen">
+  <main class="container mx-auto px-4 py-6 max-w-md">
+    <%# TODO:店舗名、住所、自動入力対応 %>
+    <!-- フォーム本体 -->
+    <div class="card bg-base-100 shadow-md rounded-2xl">
+      <div class="card-body px-6 py-8">
+        <%= form_with model: @shop, url: group_shops_path(@group) do |f| %>
+          <h2 class="text-3xl font-bold mb-8">候補登録</h2>
+
+          <!-- リンク -->
+          <div class="mb-6">
+            <label class="block text-xl font-bold mb-3">リンク</label>
+            <%= f.text_field :url, 
+                placeholder: "XXXXXXXXXXX", 
+                class: "input input-bordered w-full text-lg" %>
+          </div>
+
+          <!-- 店舗名 -->
+          <div class="mb-6">
+            <label class="block text-xl font-bold mb-3">店舗名</label>
+            <%= f.text_field :name, 
+                placeholder: "XXXXXXXXXXX", 
+                class: "input input-bordered w-full text-lg" %>
+          </div>
+
+          <!-- 場所 -->
+          <div class="mb-8">
+            <label class="block text-xl font-bold mb-3">場所</label>
+            <%= f.text_field :address, 
+                placeholder: "XXXXXXXXXXXX", 
+                class: "input input-bordered w-full text-lg" %>
+          </div>
+
+          <!-- ボタン -->
+          <div class="flex gap-4 justify-center">
+            <%= link_to "戻る", group_path(@group), 
+                class: "btn btn-neutral rounded-full px-12 text-xl" %>
+            <%= f.submit "登録", 
+                class: "btn btn-primary text-white rounded-full px-12 text-xl" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </main>
+</body>
