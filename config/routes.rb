@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   root "posts#index"
 
   resources :groups, param: :uuid, only: [ :new, :create, :show ] do
-  get :success, on: :member
-end
+    get :success, on: :member
+    resources :shops, only: [ :new, :create ]
+  end
 end
