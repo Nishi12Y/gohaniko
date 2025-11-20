@@ -17,4 +17,8 @@ Rails.application.routes.draw do
     get :success, on: :member
     resources :shops, only: [ :new, :create ]
   end
+
+  namespace :api do
+    get "ogp", to: "ogp#show"
+  end
 end
