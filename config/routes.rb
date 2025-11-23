@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :groups, param: :uuid, only: [ :new, :create, :show ] do
     get :success, on: :member
-    resources :shops, only: [ :new, :create ]
+    resources :shops, only: [ :new, :create, :destroy ]
   end
 
   namespace :api do
