@@ -5,6 +5,8 @@ class GroupsController < ApplicationController
 
     def show
         @group = Group.find_by(uuid: params[:uuid])
+        @shops = @group.shops
+        puts(@shops)
     end
 
     def create
