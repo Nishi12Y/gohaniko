@@ -15,6 +15,12 @@ class ShopsController < ApplicationController
     end
   end
 
+  def destroy
+    @shop = Shop.find(params[:id])
+    @shop.destroy
+    redirect_to group_path(@shop.group), success: "お店を削除しました"
+  end
+
   private
 
   def shop_params
