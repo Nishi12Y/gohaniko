@@ -1,5 +1,4 @@
 class ShopsController < ApplicationController
-
   def new
     @shop = Shop.new
     @group = Group.find_by(uuid: params[:group_uuid])
