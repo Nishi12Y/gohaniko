@@ -4,9 +4,7 @@
     <!-- Title and Top Button -->
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-xl font-bold">投票画面</h1>
-      <button class="btn btn-sm bg-stone-400 hover:bg-stone-500 text-white rounded-full">
-        トップページへ
-      </button>
+      <%= link_to "トップページへ", group_path(@group), class: "btn btn-sm bg-stone-400 hover:bg-stone-500 text-white rounded-full" %>
     </div>
 
     <%= form_with url: "#", method: :post, local: true do |f| %>
