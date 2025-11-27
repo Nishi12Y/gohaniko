@@ -11,8 +11,13 @@ class VotesController < ApplicationController
   private
 
   def set_user_token
-    session[:user_token] ||= SecureRandom.uuid
-    cookies.permanent.signed[:user_token] = session[:user_token]
-    session[:user_token]
+    return if cookies.signed[:user_token].present?
+
+    cookies.signed[:user_token] = {
+      value: SecureRandom.uuid,
+      expires: 1.year.from_now,
+      httponly: true,
+      secure: Rails.env.production?
+    }
   end
 end
