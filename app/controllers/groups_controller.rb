@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
 
     def confirmation
         @group = Group.find_by(uuid: params[:uuid])
-        
+
         if @group.nil?
             Rails.logger.error "Group not found with uuid: #{params[:uuid]}"
             redirect_to root_path, alert: "グループが見つかりません" and return
