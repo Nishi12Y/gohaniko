@@ -2,7 +2,7 @@
   <div class="max-w-md mx-auto">
     <!-- フォームカード -->
     <div class="bg-base-100 p-6 rounded-b-lg shadow-lg">
-      <%= form_with model: @group do |f| %>
+      <%= form_with model: @group, data: { turbo: false } do |f| %>
         
         <!-- グループタイトル -->
         <div class="form-control mb-6">
