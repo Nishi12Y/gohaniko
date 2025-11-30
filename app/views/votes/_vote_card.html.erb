@@ -1,0 +1,27 @@
+<%# TODO:shop_cardのパーシャルを一緒に使うように変更する %>
+<div id="ogp-preview-<%= shop.id %>" data-url="<%= shop.url %>" class="card bg-base-100 shadow-md mb-4 relative" data-controller="ogp">
+
+  <div class="card-body p-4">
+    <ul class="text-sm space-y-1 mb-3">
+      <li>・店舗名: <%= shop.name %></li>
+      <li>・住所: <%= shop.address %></li>
+    </ul>
+
+    <!-- URLプレビュー -->
+    <a href="<%= shop.url %>" target="_blank" class="block rounded overflow-hidden border border-base-300 hover:shadow-md transition">
+      <div class="rounded overflow-hidden border border-base-300">
+        <img id="ogp-image-<%= shop.id %>" class="w-full aspect-video object-cover" />
+        <div class="p-3">
+          <div id="ogp-title-<%= shop.id %>" class="font-bold text-sm mb-1"></div>
+          <div id="ogp-description-<%= shop.id %>" class="text-xs text-gray-500"></div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<div class="text-center font-medium mb-2">行きたい度を選択してください</div>
+<div class="rating rating-lg gap-2 flex justify-center mb-8">
+  <% (1..5).each do |i| %>
+    <%= radio_button_tag "votes[#{shop.id}]", i, @votes[shop.id] == i, class: "mask mask-star-2 bg-orange-400" %>
+  <% end %>
+</div>

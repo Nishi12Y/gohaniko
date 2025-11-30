@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       get :confirmation
     end
     resources :shops, only: [ :new, :create, :destroy ]
+    resources :votes, only: [ :new, :create ]
   end
 
   namespace :api do

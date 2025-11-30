@@ -1,6 +1,7 @@
 <!-- app/views/stores/index.html.erb -->
 <body class="bg-base-200 min-h-screen">
   <!-- メインコンテンツ -->
+  <%# TODO:パーシャルの方に、data-controller="ogp"を移動させる %>
   <main class="container mx-auto px-4 py-6 max-w-md" data-controller="ogp">
     <%# TODO:sharedのフラッシュメッセージを使えるか調査 %>
     <!-- フラッシュメッセージ -->
@@ -28,7 +29,7 @@
       <div class="grid grid-cols-2 gap-3 mb-4">
         <a href="<%= new_group_shop_path(@group) %>" class="btn btn-primary text-white">候補登録</a>
         <!-- TODO:色の適用原因調査 -->
-        <button class="btn btn-neutral">投票</button>
+        <a href="<%= new_group_vote_path(@group) %>" class="btn btn-neutral">投票</a>
       </div>
       <div class="grid grid-cols-2 gap-3">
         <!-- TODO:色の適用原因調査 -->
