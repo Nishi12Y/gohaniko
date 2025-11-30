@@ -10,7 +10,7 @@ class CreateVotes < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    add_index :votes, [:group_id, :user_token, :shop_id], unique: true
-    add_index :votes, [:group_id, :shop_id]
+    add_index :votes, [ :group_id, :user_token, :shop_id ], unique: true
+    add_index :votes, [ :group_id, :shop_id ]
   end
 end
