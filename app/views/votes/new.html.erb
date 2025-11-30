@@ -7,13 +7,13 @@
       <%= link_to "トップページへ", group_path(@group), class: "btn btn-sm bg-stone-400 hover:bg-stone-500 text-white rounded-full" %>
     </div>
 
-    <%= form_with url: "#", method: :post, local: true do |f| %>
+    <%= form_with url: group_votes_path(@group), method: :post, local: true,data: { turbo: false } do %>
       <% @shops.each do |shop| %>
-          <%= render partial: "vote_card", locals: { shop: shop, f: f } %>
+        <%= render partial: "vote_card", locals: { shop: shop } %>
       <% end %>
       <!-- Submit Button -->
       <div class="flex justify-center">
-        <%= f.submit "送信", class: "btn btn-wide btn-primary rounded-full text-lg" %>
+        <%= submit_tag "送信", class: "btn btn-wide btn-primary rounded-full text-lg" %>
       </div>
     <% end %>
   </div>

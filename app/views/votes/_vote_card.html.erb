@@ -21,7 +21,7 @@
 </div>
 <div class="text-center font-medium mb-2">行きたい度を選択してください</div>
 <div class="rating rating-lg gap-2 flex justify-center mb-8">
-    <% (1..5).each do |i| %>
-        <%= f.radio_button shop.id, i, class: "mask mask-star-2 bg-orange-400" %>
-    <% end %>
+  <% (1..5).each do |i| %>
+    <%= radio_button_tag "votes[#{shop.id}]", i, @votes[shop.id] == i, class: "mask mask-star-2 bg-orange-400" %>
+  <% end %>
 </div>
