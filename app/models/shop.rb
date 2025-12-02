@@ -12,6 +12,6 @@ class Shop < ApplicationRecord
   scope :ranked_by_votes, -> {
     left_joins(:votes)
       .group(:id)
-      .order(Arel.sql('COALESCE(SUM(votes.score), 0) DESC'))
+      .order(Arel.sql("COALESCE(SUM(votes.score), 0) DESC"))
   }
 end
