@@ -1,6 +1,7 @@
 class VotesController < ApplicationController
   # before_action :set_user_token, only: [:new]
 
+  # 投票フォーム表示
   def new
     @group = Group.find_by(uuid: params[:group_uuid])
     @shops = @group.shops.candidate
@@ -9,6 +10,12 @@ class VotesController < ApplicationController
     # 未投票の場合は空のハッシュになる。
     @votes = Vote.where(group_id: @group.id, user_token: current_user_token)
                .pluck(:shop_id, :score).to_h
+  end
+
+  # 投票結果表示
+  def index
+    @group = Group.find_by(uuid: params[:group_uuid])
+    @top_shops = @group.shops.ranked_by_votes.limit(3)
   end
 
   def create
