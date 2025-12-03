@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
         @group = Group.find_by(uuid: params[:uuid])
         @shops = @group.shops
         @votes = Vote.where(group_id: @group.id)
-        @user_token = cookies.signed[:user_token]
+        @user_token = cookies.encrypted[:user_token]
     end
 
     def create
