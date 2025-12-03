@@ -1,0 +1,22 @@
+<div class="text-2xl font-bold text-center mb-2 mt-4">
+  <%= "#{rank}位" %>
+</div>
+<div id="ogp-preview-<%= shop.id %>" data-url="<%= shop.url %>" class="card bg-base-100 shadow-md mb-4 relative" data-controller="ogp">
+  <div class="card-body p-4">
+    <ul class="text-sm space-y-1 mb-3">
+      <li>・店舗名: <%= shop.name %></li>
+      <li>・住所: <%= shop.address %></li>
+    </ul>
+
+    <!-- URLプレビュー -->
+    <a href="<%= shop.url %>" target="_blank" class="block rounded overflow-hidden border border-base-300 hover:shadow-md transition">
+      <div class="rounded overflow-hidden border border-base-300">
+        <img id="ogp-image-<%= shop.id %>" class="w-full aspect-video object-cover" />
+        <div class="p-3">
+          <div id="ogp-title-<%= shop.id %>" class="font-bold text-sm mb-1"></div>
+          <div id="ogp-description-<%= shop.id %>" class="text-xs text-gray-500"></div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

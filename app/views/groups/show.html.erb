@@ -34,7 +34,11 @@
       <div class="grid grid-cols-2 gap-3">
         <!-- TODO:色の適用原因調査 -->
         <button class="btn btn-neutral">みんなの意見</button>
-        <button class="btn btn-primary text-white" disabled="disabled">投票結果</button>
+        <%  if Vote.voted_in_group?(user_token: @user_token, group_id: @group.id) %>
+          <a href="<%= group_votes_path(@group) %>" class="btn btn-primary text-white">投票結果</a>
+        <% else %>
+          <a href="<%= group_votes_path(@group) %>" class="btn btn-primary text-white" disabled="disabled">投票結果</a>
+        <% end %>
       </div>
     </div>
 
