@@ -61,9 +61,9 @@ class VotesController < ApplicationController
     cookies.encrypted[:user_token] = {
       value: token,
       expires: 1.year.from_now,
-      httponly: true,
-      secure: Rails.env.production?,
-      same_site: :lax
+      httponly: true, #JavaScriptからのアクセスを防止
+      secure: Rails.env.production?, #HTTPS通信時のみ送信
+      same_site: :lax #CSRF対策
     }
 
     token
