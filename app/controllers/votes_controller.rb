@@ -51,17 +51,23 @@ class VotesController < ApplicationController
 
   private
 
+  # ユーザートークンの取得または生成をする関数
   def set_user_token
-    if cookies.signed[:user_token].present?
-      return cookies.signed[:user_token]
+    if cookies.encrypted[:user_token].present?
+      return cookies.encrypted[:user_token]
     end
-    cookies.signed[:user_token] = {
-      value: SecureRandom.uuid,
+
+    token = SecureRandom.uuid
+    cookies.encrypted[:user_token] = {
+      value: token,
       expires: 1.year.from_now,
       httponly: true,
-      secure: Rails.env.production?
+      secure: Rails.env.production?,
+      same_site: :lax
     }
-  end
+
+    token
+end
 
   def vote_params
     params.fetch(:votes, {})
