@@ -1,11 +1,13 @@
 <div class="min-h-screen bg-amber-50 p-4">
   <div class="max-w-md mx-auto">
-    <h1 class="text-xl font-bold mb-6">投票結果</h1>
-      <% @top_shops.each_with_index do |shop, index| %>
-            <%= render partial: "votes/shop_card", locals: { shop: shop , rank: index + 1} %>
-      <% end %>
-  </div>
-  <div class="flex items-center justify-between mb-6">
-    <%= link_to "トップページへ", group_path(@group), class: "btn btn-md bg-stone-400 hover:bg-stone-500 text-white rounded-full" %>
+    <!-- Title and Top Button -->
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-xl font-bold">投票結果画面</h1>
+      <%= link_to "トップページへ", group_path(@group), class: "btn btn-sm bg-stone-400 hover:bg-stone-500 text-white rounded-full" %>
+    </div>
+
+    <% @top_shops.each_with_index do |shop, index| %>
+          <%= render partial: "votes/shop_card", locals: { shop: shop , rank: index + 1} %>
+    <% end %>
   </div>
 </div>
