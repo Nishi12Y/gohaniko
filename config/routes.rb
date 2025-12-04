@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     end
     resources :shops, only: [ :new, :create, :destroy ]
     resources :votes, only: [ :new, :create, :index ]
+    resources :answers, only: [ :new, :create, :index ]
   end
 
   namespace :api do
