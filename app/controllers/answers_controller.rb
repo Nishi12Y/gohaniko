@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
 
   def new
     @group = Group.find_by(uuid: params[:group_uuid])
-    # @question = Question.find(params[:question_id])
+    @question_list = Question.where(is_default: true)
     @answer = Answer.new
   end
 end

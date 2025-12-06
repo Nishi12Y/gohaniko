@@ -4,48 +4,10 @@
     <h2 class="text-xl font-bold mb-6">あなたの意見</h2>
 
     <%= form_with url: group_answers_path(@group), method: :post, local: true do |f| %>
-      <!-- 苦手なもの -->
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2">
-          苦手なもの
-        </label>
-        <%= f.text_field :dislike, 
-            placeholder: "例）魚介類、辛いもの",
-            value: "",
-            class: "input input-bordered w-full bg-white" %>
-      </div>
-
-      <!-- 価格帯 -->
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2">
-          価格帯
-        </label>
-        <%= f.select :price_range,
-            options_for_select([
-              ["指定なし" , nil],
-              ["〜1000円", 1000],
-              ["〜2000円", 2000],
-              ["〜3000円", 3000],
-              ["〜4000円", 4000],
-              ["〜5000円", 5000],
-              ["〜6000円", 6000],
-              ["〜7000円", 7000],
-              ["〜8000円", 8000],
-              ["〜9000円", 9000],
-            ], ),
-            {},
-            class: "select select-bordered w-full bg-white" %>
-      </div>
-
-      <!-- 集合時間 -->
-      <div class="mb-8">
-        <label class="block text-sm font-medium mb-2">
-          集合時間
-        </label>
-        <%= f.time_field :meeting_time,
-            value: "99:99",
-            class: "input input-bordered w-full bg-white" %>
-      </div>
+      <% @question_list.each do |question| %>
+        <% container_class = question == @question_list.last ? "mb-8" : "mb-6" %>
+        <%= render partial: "question_form", locals: { question: question, container_class: container_class } %>
+      <% end %>
 
       <!-- ボタン -->
           <div class="flex gap-4 justify-center">

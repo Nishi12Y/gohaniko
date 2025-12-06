@@ -1,0 +1,28 @@
+<% input_name = "answers[#{question.id}][content]" %>
+<div class="<%= container_class %>">
+  <label class="block text-sm font-medium mb-2">
+    <%= question.text %>
+  </label>
+  <% case question.input_type %>
+  <% when "select" %>
+    <%
+      select_options = (question.options || []).map do |option|
+        data = option.respond_to?(:with_indifferent_access) ? option.with_indifferent_access : option
+        [data[:label], data[:value]]
+      end
+    %>
+    <%= select_tag input_name,
+        options_for_select(select_options),
+        class: "select select-bordered w-full bg-white" %>
+  <% when "time" %>
+    <%= time_field_tag input_name,
+        nil,
+        class: "input input-bordered w-full bg-white" %>
+  <% else %>
+    <%= text_field_tag input_name,
+        nil,
+        placeholder: "自由にご記入ください",
+        class: "input input-bordered w-full bg-white" %>
+  <% end %>
+  <%= hidden_field_tag "answers[#{question.id}][question_id]", question.id %>
+</div>
