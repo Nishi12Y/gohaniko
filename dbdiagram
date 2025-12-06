@@ -31,6 +31,9 @@ Table votes {
 Table questions {
   id integer [primary key]
   text varchar [not null,note: "質問内容"]
+  input_type varchar [not null, note: "入力タイプ（例：text, multiple_choiceなど）"]
+  options json [note: "選択肢（input_typeがmultiple_choiceの場合などに使用）"]
+  is_default boolean [not null, default: false, note: "グループ共通の質問かどうか"]
   created_at timestamp
   updated_at timestamp
 }
