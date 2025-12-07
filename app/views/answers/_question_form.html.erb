@@ -1,4 +1,4 @@
-<% input_name = "answers[#{question.id}][content]" %>
+<% input_name = "answers[#{question.id}]" %>
 <div class="<%= container_class %>">
   <label class="block text-sm font-medium mb-2">
     <%= question.text %>
@@ -24,5 +24,4 @@
         placeholder: "自由にご記入ください",
         class: "input input-bordered w-full bg-white" %>
   <% end %>
-  <%= hidden_field_tag "answers[#{question.id}][question_id]", question.id %>
 </div>
