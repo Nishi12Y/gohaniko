@@ -1,8 +1,66 @@
 class AnswersController < ApplicationController
-
   def new
     @group = Group.find_by(uuid: params[:group_uuid])
     @question_list = Question.where(is_default: true)
-    @answer = Answer.new
+  end
+
+  def create
+    group = Group.find_by(uuid: params[:group_uuid])
+
+    # エラー時の再描画用
+    @questions = Question.where(is_default: true)
+
+    @answers = []  # エラー時にビューで使う
+
+    ActiveRecord::Base.transaction do
+      answer_params.each do |question_id, content|
+        puts ("start create answer")
+        answer = Answer.new(
+          group_id: group.id,
+          question_id: question_id,
+          user_token: current_user_token,
+          content: content
+        )
+
+        @answers << answer
+
+        unless answer.save
+          # ここで例外を投げる → transaction が rollback される
+          raise ActiveRecord::Rollback
+        end
+      end
+    end
+
+    # 失敗した Answer が含まれていればエラーと判定
+    if @answers.any? { |a| a.errors.any? }
+      flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
+      render :new, status: :unprocessable_entity
+    else
+      redirect_to group_path(group), notice: "回答が完了しました！"
+    end
+  end
+
+  private
+
+  def answer_params
+    params.require(:answers).permit()
+  end
+
+  # ユーザートークンの取得または生成をする関数
+  def set_user_token
+    if cookies.encrypted[:user_token].present?
+      return cookies.encrypted[:user_token]
+    end
+
+    token = SecureRandom.uuid
+    cookies.encrypted[:user_token] = {
+      value: token,
+      expires: 1.year.from_now,
+      httponly: true, # JavaScriptからのアクセスを防止
+      secure: Rails.env.production?, # HTTPS通信時のみ送信
+      same_site: :lax # CSRF対策
+    }
+
+    token
   end
 end
