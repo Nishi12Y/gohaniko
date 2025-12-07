@@ -1,0 +1,21 @@
+<div class="min-h-screen bg-base-100">
+  <!-- メインコンテンツ -->
+  <div class="max-w-md mx-auto p-6">
+    <h2 class="text-xl font-bold mb-6">あなたの意見</h2>
+
+    <%= form_with url: group_answers_path(@group), method: :post, local: true do |f| %>
+      <% @question_list.each do |question| %>
+        <% container_class = question == @question_list.last ? "mb-8" : "mb-6" %>
+        <%= render partial: "question_form", locals: { question: question, container_class: container_class } %>
+      <% end %>
+
+        <!-- ボタン -->
+        <div class="flex gap-4 justify-center">
+        <%= link_to "戻る", group_path(@group), 
+            class: "btn btn-neutral rounded-full px-12 text-xl" %>
+        <%= f.submit "登録", 
+            class: "btn btn-primary text-white rounded-full px-12 text-xl" %>
+        </div>
+    <% end %>
+  </div>
+</div>
