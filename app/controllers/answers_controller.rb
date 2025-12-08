@@ -9,6 +9,7 @@ class AnswersController < ApplicationController
 
     # エラー時の再描画用
     @questions = Question.where(is_default: true)
+    current_user_token = set_user_token
 
     @answers = []  # エラー時にビューで使う
 
@@ -16,7 +17,7 @@ class AnswersController < ApplicationController
       answer_params.each do |question_id, content|
         puts ("start create answer")
         answer = Answer.new(
-          group_id: group.id,
+          group_id: @group.id,
           question_id: question_id,
           user_token: current_user_token,
           content: content
@@ -43,7 +44,15 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answers).permit()
+    raw = params.require(:answers).to_unsafe_h
+
+    # ① 数字のキー以外を除外
+    filtered = raw.select { |key, _| key.to_s =~ /\A\d+\z/ }
+
+    # ② 値を String のみに制限（Array や Hash を防ぐ）
+    filtered.transform_values!(&:to_s)
+
+    filtered
   end
 
   # ユーザートークンの取得または生成をする関数
@@ -62,5 +71,10 @@ class AnswersController < ApplicationController
     }
 
     token
+  end
+
+  def set_group
+    @group = Group.find_by(uuid: params[:group_uuid])
+    redirect_to root_path, alert: "グループが見つかりませんでした" unless @group
   end
 end
