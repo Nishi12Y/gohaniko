@@ -1,6 +1,28 @@
 class AnswersController < ApplicationController
+  before_action :set_group, only: [:new, :create, :index]
+
+  def index
+    # 各グループで共通の質問を取得
+    @questions = Question.where(is_default: true)
+
+    # 質問IDごとに回答一覧を格納するハッシュ
+    @answers_by_question = Hash.new { |h, k| h[k] = [] }
+
+    # 3. グループの回答を全て取得(""の回答は除く)
+    answers = Answer.where(
+      group_id: @group.id,
+      question_id: @questions.pluck(:id)
+    ).where.not(content: "")
+
+    answers.each { |a| puts a.inspect }
+
+    # 4. 質問IDごとに回答をまとめる
+    answers.each do |answer|
+      @answers_by_question[answer.question_id] << answer
+    end
+  end
+
   def new
-    @group = Group.find_by(uuid: params[:group_uuid])
     @question_list = Question.where(is_default: true)
   end
 
