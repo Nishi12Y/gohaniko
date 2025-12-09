@@ -43,7 +43,6 @@ class AnswersController < ApplicationController
       puts(answer.inspect)
       @answers_by_question[answer.question_id] = answer
     end
-
   end
 
   def create
