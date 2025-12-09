@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_group, only: [:new, :create, :index]
+  PRICE_QUESTION_ID = 8
 
   def index
     # 各グループで共通の質問を取得
@@ -20,6 +21,11 @@ class AnswersController < ApplicationController
     answers.each do |answer|
       @answers_by_question[answer.question_id] << answer
     end
+
+    # 5. 集計
+    @price_counts = Answer.where(group_id: @group.id, question_id: PRICE_QUESTION_ID)
+                      .group(:content)
+                      .count
   end
 
   def new

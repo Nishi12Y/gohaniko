@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ChartController from "./chart_controller"
+application.register("chart", ChartController)
+
 import FlashController from "./flash_controller"
 application.register("flash", FlashController)
 

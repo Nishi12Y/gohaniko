@@ -23,22 +23,30 @@
 
           <!-- 回答がある場合 -->
           <% if answers.present? %>
-            <div class="bg-warning/20 rounded-lg p-4 space-y-3 max-h-96 overflow-y-auto">
-              <% answers.each_with_index do |answer, index| %>
-                <div class="flex items-start gap-3 text-base-content">
-                  <!-- 回答の番号 -->
-                  <div class="w-9 h-9 rounded-full bg-secondary text-secondary-content flex items-center justify-center text-xs font-semibold shrink-0">
-                    No.<%= index + 1 %>
-                  </div>
-                  <!-- 回答内容 -->
-                  <div class="flex-1">
-                    <p class="text-base leading-relaxed break-words">
-                      <%= answer.content %>
-                    </p>
-                  </div>
+            <% if question.text == '希望する価格帯'%>
+                <canvas 
+                  data-controller="chart"
+                  data-chart-labels-value="<%= @price_counts.keys.map(&:to_s).to_json %>"
+                  data-chart-data-value="<%= @price_counts.values.to_json %>"
+                ></canvas>
+            <% else%>
+                <div class="bg-warning/20 rounded-lg p-4 space-y-3 max-h-96 overflow-y-auto">
+                <% answers.each_with_index do |answer, index| %>
+                    <div class="flex items-start gap-3 text-base-content">
+                    <!-- 回答の番号 -->
+                    <div class="w-9 h-9 rounded-full bg-secondary text-secondary-content flex items-center justify-center text-xs font-semibold shrink-0">
+                        No.<%= index + 1 %>
+                    </div>
+                    <!-- 回答内容 -->
+                    <div class="flex-1">
+                        <p class="text-base leading-relaxed break-words">
+                        <%= answer.content %>
+                        </p>
+                    </div>
+                    </div>
+                <% end %>
                 </div>
-              <% end %>
-            </div>
+            <% end %>
           <% else %>
             <!-- 回答がまだない場合 -->
             <div class="bg-base-200 rounded-lg p-4">
