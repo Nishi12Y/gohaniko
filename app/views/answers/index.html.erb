@@ -1,0 +1,67 @@
+<div class="min-h-screen bg-base-200 pb-20">
+  <div class="container mx-auto px-4 py-6 max-w-2xl">
+
+    <!-- ページタイトル -->
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold text-base-content">みんなの意見</h1>
+      <%= link_to "意見を登録", new_group_answer_path(@group), class: "btn btn-md btn-primary" %>
+    </div>
+
+    <!-- 各質問ごとの回答一覧 -->
+    <% @questions.each do |question| %>
+      <% answers = @answers_by_question[question.id] || [] %>
+
+      <div class="card bg-base-100 shadow-md mb-6">
+        <div class="card-body">
+          <!-- 質問文 -->
+          <h2 class="card-title text-lg mb-2"><%= question.text %></h2>
+
+          <!-- メタ情報（回答人数など） -->
+          <p class="text-sm text-base-content/70 mb-4">
+            回答数：<span class="font-semibold"><%= answers.size %></span>人
+          </p>
+
+          <!-- 回答がある場合 -->
+          <% if answers.present? %>
+            <% if question.text == '希望する価格帯'%>
+                <canvas 
+                  data-controller="chart"
+                  data-chart-labels-value="<%= @price_counts.keys.map(&:to_s).to_json %>"
+                  data-chart-data-value="<%= @price_counts.values.to_json %>"
+                ></canvas>
+            <% else%>
+                <div class="bg-warning/20 rounded-lg p-4 space-y-3 max-h-96 overflow-y-auto">
+                <% answers.each_with_index do |answer, index| %>
+                    <div class="flex items-start gap-3 text-base-content">
+                    <!-- 回答の番号 -->
+                    <div class="w-9 h-9 rounded-full bg-secondary text-secondary-content flex items-center justify-center text-xs font-semibold shrink-0">
+                        No.<%= index + 1 %>
+                    </div>
+                    <!-- 回答内容 -->
+                    <div class="flex-1">
+                        <p class="text-base leading-relaxed break-words">
+                        <%= answer.content %>
+                        </p>
+                    </div>
+                    </div>
+                <% end %>
+                </div>
+            <% end %>
+          <% else %>
+            <!-- 回答がまだない場合 -->
+            <div class="bg-base-200 rounded-lg p-4">
+              <p class="text-base-content/60 text-sm">まだ回答がありません</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- 戻るボタン -->
+    <div class="flex gap-4 justify-center mt-8">
+      <%= link_to "戻る", group_path(@group),
+          class: "btn btn-neutral rounded-full px-12 text-xl" %>
+    </div>
+
+  </div>
+</div>

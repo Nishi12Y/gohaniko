@@ -1,18 +1,18 @@
 # --- 共通の質問を作成 ---
 
 Question.find_or_create_by!(
-  text: "苦手な食べ物は何ですか？",
+  text: "苦手な食べ物",
   input_type: "text",
   is_default: true
 )
 
 q = Question.find_or_create_by!(
-  text: "希望する価格帯を選んでください",
+  text: "希望する価格帯",
   input_type: "select",
   is_default: true
 )
 q.update!(
-  text: "希望する価格帯を選んでください",
+  text: "希望する価格帯",
   input_type: "select",
   options: [
     { label: "指定なし", value: 9999 },
@@ -30,7 +30,7 @@ q.update!(
 )
 
 Question.find_or_create_by!(
-  text: "集合時間を選んでください",
+  text: "希望集合時間",
   input_type: "time",
   is_default: true
 )

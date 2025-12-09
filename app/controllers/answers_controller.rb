@@ -1,12 +1,38 @@
 class AnswersController < ApplicationController
+  before_action :set_group, only: [ :new, :create, :index ]
+  PRICE_QUESTION_ID = 8
+
+  def index
+    # 各グループで共通の質問を取得
+    @questions = Question.where(is_default: true)
+
+    # 質問IDごとに回答一覧を格納するハッシュ
+    @answers_by_question = Hash.new { |h, k| h[k] = [] }
+
+    # 3. グループの回答を全て取得(""の回答は除く)
+    answers = Answer.where(
+      group_id: @group.id,
+      question_id: @questions.pluck(:id)
+    ).where.not(content: "")
+
+    answers.each { |a| puts a.inspect }
+
+    # 4. 質問IDごとに回答をまとめる
+    answers.each do |answer|
+      @answers_by_question[answer.question_id] << answer
+    end
+
+    # 5. 集計
+    @price_counts = Answer.where(group_id: @group.id, question_id: PRICE_QUESTION_ID)
+                      .group(:content)
+                      .count
+  end
+
   def new
-    @group = Group.find_by(uuid: params[:group_uuid])
     @question_list = Question.where(is_default: true)
   end
 
   def create
-    group = Group.find_by(uuid: params[:group_uuid])
-
     # エラー時の再描画用
     @questions = Question.where(is_default: true)
     current_user_token = set_user_token
@@ -37,7 +63,7 @@ class AnswersController < ApplicationController
       flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
       render :new, status: :unprocessable_entity
     else
-      redirect_to group_path(group), notice: "回答が完了しました！"
+      redirect_to group_answers_path(@group), notice: "回答が完了しました！"
     end
   end
 
