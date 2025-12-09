@@ -27,7 +27,6 @@ class AnswersController < ApplicationController
   end
 
   def create
-    group = Group.find_by(uuid: params[:group_uuid])
 
     # エラー時の再描画用
     @questions = Question.where(is_default: true)
@@ -59,7 +58,7 @@ class AnswersController < ApplicationController
       flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
       render :new, status: :unprocessable_entity
     else
-      redirect_to group_path(group), notice: "回答が完了しました！"
+      redirect_to group_answers_path(@group), notice: "回答が完了しました！"
     end
   end
 
