@@ -12,15 +12,15 @@
       end
     %>
     <%= select_tag input_name,
-        options_for_select(select_options),
+        options_for_select(select_options,answer),
         class: "select select-bordered w-full bg-white" %>
   <% when "time" %>
     <%= time_field_tag input_name,
-        nil,
+        answer,
         class: "input input-bordered w-full bg-white" %>
   <% else %>
     <%= text_field_tag input_name,
-        nil,
+        answer,
         placeholder: "自由にご記入ください",
         class: "input input-bordered w-full bg-white" %>
   <% end %>

@@ -6,7 +6,8 @@
     <%= form_with url: group_answers_path(@group), method: :post, local: true do |f| %>
       <% @question_list.each do |question| %>
         <% container_class = question == @question_list.last ? "mb-8" : "mb-6" %>
-        <%= render partial: "question_form", locals: { question: question, container_class: container_class } %>
+        <% answer = @answers_by_question[question.id]&.content %>
+        <%= render partial: "question_form", locals: { question: question, container_class: container_class, answer: answer} %>
       <% end %>
 
         <!-- ボタン -->

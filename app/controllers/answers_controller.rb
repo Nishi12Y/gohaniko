@@ -15,8 +15,6 @@ class AnswersController < ApplicationController
       question_id: @questions.pluck(:id)
     ).where.not(content: "")
 
-    answers.each { |a| puts a.inspect }
-
     # 4. 質問IDごとに回答をまとめる
     answers.each do |answer|
       @answers_by_question[answer.question_id] << answer
@@ -30,6 +28,21 @@ class AnswersController < ApplicationController
 
   def new
     @question_list = Question.where(is_default: true)
+
+    # 以下回答済み内容の取得
+    @answers_by_question = {}
+
+    answer_list = Answer.where(
+      question_id: @question_list.pluck(:id),
+      user_token: set_user_token,
+      group_id: @group.id
+    )
+
+    answer_list.each do |answer|
+      puts(answer.class)
+      puts(answer.inspect)
+      @answers_by_question[answer.question_id] = answer
+    end
   end
 
   def create
@@ -42,12 +55,12 @@ class AnswersController < ApplicationController
     ActiveRecord::Base.transaction do
       answer_params.each do |question_id, content|
         puts ("start create answer")
-        answer = Answer.new(
+        answer = Answer.find_or_initialize_by(
           group_id: @group.id,
           question_id: question_id,
           user_token: current_user_token,
-          content: content
         )
+        answer.content = content
 
         @answers << answer
 
