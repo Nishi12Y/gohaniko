@@ -56,12 +56,12 @@ class AnswersController < ApplicationController
     ActiveRecord::Base.transaction do
       answer_params.each do |question_id, content|
         puts ("start create answer")
-        answer = Answer.new(
+        answer = Answer.find_or_initialize_by(
           group_id: @group.id,
           question_id: question_id,
           user_token: current_user_token,
-          content: content
         )
+        answer.content = content
 
         @answers << answer
 
