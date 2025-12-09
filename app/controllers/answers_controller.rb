@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_group, only: [:new, :create, :index]
+  before_action :set_group, only: [ :new, :create, :index ]
   PRICE_QUESTION_ID = 8
 
   def index
@@ -33,7 +33,6 @@ class AnswersController < ApplicationController
   end
 
   def create
-
     # エラー時の再描画用
     @questions = Question.where(is_default: true)
     current_user_token = set_user_token
