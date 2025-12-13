@@ -1,0 +1,209 @@
+<div class="min-h-screen bg-gradient-to-b from-orange-50 to-white">
+  <!-- ヒーローセクション -->
+  <div class="hero min-h-[70vh] sm:min-h-[80vh] bg-gradient-to-br from-orange-100 via-yellow-50 to-orange-50">
+    <div class="hero-content text-center px-4 py-8 sm:py-12">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 font-darumadrop flex justify-center">
+          ごはんいこ
+          <img src="<%= asset_path('fork_spoon.svg') %>" alt="fork_spoon" class="w-10 h-10">
+        </h1>
+        <p class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-700 mb-4 sm:mb-6">
+          「ごはんいこ!」と言ったその瞬間から、<br>
+          スムーズに決められるアプリ
+        </p>
+        <p class="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 px-2">
+          言いにくいことも共有しながら、<br>
+          みんなの意見を反映した<br>
+          ご飯場所をスムーズに決めるサポートツール
+        </p>
+        <a href="<%= new_group_path %>" class="btn btn-primary btn-md sm:btn-lg text-white bg-orange-500 hover:bg-orange-600 border-none shadow-lg">
+            はじめる
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 問題提起セクション -->
+  <div class="container mx-auto px-4 py-12 sm:py-16">
+    <div class="text-center mb-8 sm:mb-12">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 px-2">
+        こんな経験ありませんか?
+      </h2>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body items-center text-center p-6">
+          <div class="text-4xl sm:text-5xl mb-3 sm:mb-4">💬</div>
+          <h3 class="card-title text-orange-600 text-lg sm:text-xl">LINEで流れてしまう</h3>
+          <p class="text-sm sm:text-base text-gray-600">候補のお店情報がどんどん流れて、見返すのが大変...</p>
+        </div>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body items-center text-center p-6">
+          <div class="text-4xl sm:text-5xl mb-3 sm:mb-4">😣</div>
+          <h3 class="card-title text-orange-600 text-lg sm:text-xl">言いにくい...</h3>
+          <p class="text-sm sm:text-base text-gray-600">予算や苦手な食べ物、実は伝えづらい...</p>
+        </div>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body items-center text-center p-6">
+          <div class="text-4xl sm:text-5xl mb-3 sm:mb-4">🤔</div>
+          <h3 class="card-title text-orange-600 text-lg sm:text-xl">周りに合わせちゃう</h3>
+          <p class="text-sm sm:text-base text-gray-600">本当の行きたい度合いを表現できない...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 使い方セクション -->
+  <div class="bg-gradient-to-b from-white to-orange-50 py-12 sm:py-16">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-8 sm:mb-12">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-3 sm:mb-4 px-2">
+          使い方はとってもシンプル
+        </h2>
+        <p class="text-base sm:text-lg text-gray-600 px-2">たった5ステップで、スムーズに決定！</p>
+      </div>
+
+      <div class="max-w-4xl mx-auto">
+        <div class="space-y-6 sm:space-y-8">
+          <!-- Step 1 -->
+          <div class="flex items-start gap-3 sm:gap-6">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-orange-500 text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-lg">
+                1
+              </div>
+            </div>
+            <div class="flex-grow pt-1">
+              <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">グループのリンクを作成</h3>
+              <p class="text-sm sm:text-base text-gray-600">お出かけグループのリンクを簡単に作成できます</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flex items-start gap-3 sm:gap-6">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-orange-500 text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-lg">
+                2
+              </div>
+            </div>
+            <div class="flex-grow pt-1">
+              <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">リンクをグループに共有</h3>
+              <p class="text-sm sm:text-base text-gray-600">作成したリンクをLINEなどで友達に共有</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex items-start gap-3 sm:gap-6">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-orange-500 text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-lg">
+                3
+              </div>
+            </div>
+            <div class="flex-grow pt-1">
+              <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">食事先の候補を登録</h3>
+              <p class="text-sm sm:text-base text-gray-600">みんなで行きたいお店の候補を登録（期限も設定できる）</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="flex items-start gap-3 sm:gap-6">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-orange-500 text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-lg">
+                4
+              </div>
+            </div>
+            <div class="flex-grow pt-1">
+              <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">匿名で希望を登録</h3>
+              <p class="text-sm sm:text-base text-gray-600">苦手な食べ物・価格帯・希望時間などを匿名で記入</p>
+              <div class="badge badge-warning badge-sm sm:badge-md mt-2">匿名なので安心!</div>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="flex items-start gap-3 sm:gap-6">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-orange-500 text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-lg">
+                5
+              </div>
+            </div>
+            <div class="flex-grow pt-1">
+              <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-1 sm:mb-2">1〜5段階で投票</h3>
+              <p class="text-sm sm:text-base text-gray-600">候補のお店に対して、行きたい度合いを投票</p>
+              <div class="flex flex-wrap gap-1 sm:gap-2 mt-2 sm:mt-3">
+                <div class="badge badge-outline badge-sm sm:badge-md">⭐</div>
+                <div class="badge badge-outline badge-sm sm:badge-md">⭐⭐</div>
+                <div class="badge badge-outline badge-sm sm:badge-md">⭐⭐⭐</div>
+                <div class="badge badge-outline badge-sm sm:badge-md">⭐⭐⭐⭐</div>
+                <div class="badge badge-outline badge-sm sm:badge-md">⭐⭐⭐⭐⭐</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 特徴セクション -->
+  <div class="container mx-auto px-4 py-12 sm:py-16">
+    <div class="text-center mb-8 sm:mb-12">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 px-2">
+        ごはんいこ！の特徴
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-5xl mx-auto">
+      <div class="card bg-gradient-to-br from-orange-50 to-yellow-50 shadow-xl">
+        <div class="card-body p-6">
+          <h3 class="card-title text-orange-600 text-lg sm:text-xl md:text-2xl">📋 アイデアをストック</h3>
+          <p class="text-sm sm:text-base text-gray-700">
+            候補のお店を一覧化して見やすく管理。LINEのように流れてしまう心配はありません。
+          </p>
+        </div>
+      </div>
+
+      <div class="card bg-gradient-to-br from-orange-50 to-yellow-50 shadow-xl">
+        <div class="card-body p-6">
+          <h3 class="card-title text-orange-600 text-lg sm:text-xl md:text-2xl">⭐ 行きたい度を表現</h3>
+          <p class="text-sm sm:text-base text-gray-700">
+            1〜5のポイントで投票。本当の気持ちを数字で表現できます。
+          </p>
+        </div>
+      </div>
+
+      <div class="card bg-gradient-to-br from-orange-50 to-yellow-50 shadow-xl">
+        <div class="card-body p-6">
+          <h3 class="card-title text-orange-600 text-lg sm:text-xl md:text-2xl">🔒 匿名で安心</h3>
+          <p class="text-sm sm:text-base text-gray-700">
+            価格帯や苦手な食べ物など、言いにくいことも匿名で共有できます。
+          </p>
+        </div>
+      </div>
+
+      <div class="card bg-gradient-to-br from-orange-50 to-yellow-50 shadow-xl">
+        <div class="card-body p-6">
+          <h3 class="card-title text-orange-600 text-lg sm:text-xl md:text-2xl">⚡ やり取り短縮</h3>
+          <p class="text-sm sm:text-base text-gray-700">
+            質問に答えるだけで、予約時間などの各自の都合を一度に収集できます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTAセクション -->
+  <div class="bg-gradient-to-br from-orange-300 to-orange-400 py-12 sm:py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
+        さあ、今すぐ始めよう！
+      </h2>
+      <a href="<%= new_group_path %>" class="btn btn-md sm:btn-lg bg-white text-orange-600 hover:bg-orange-50 border-none shadow-xl">
+        グループを作成
+      </a>
+    </div>
+  </div>
+
+</div>
