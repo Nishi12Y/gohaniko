@@ -15,7 +15,7 @@ q.update!(
   text: "希望する価格帯",
   input_type: "select",
   options: [
-    { label: "指定なし", value: 9999 },
+    { label: "指定なし", value: "指定なし" },
     { label: "〜1000円", value: 1000 },
     { label: "〜2000円", value: 2000 },
     { label: "〜3000円", value: 3000 },
