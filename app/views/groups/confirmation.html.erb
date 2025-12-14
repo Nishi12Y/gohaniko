@@ -1,16 +1,16 @@
 <div class="min-h-screen bg-base-200">
-  <div class="max-w-md mx-auto">
+  <div class="max-w-md mx-auto px-4">
     <!-- フラッシュメッセージ -->
     <div id="flash-message" class="hidden fixed top-0 left-0 right-0 z-50">
       <div class="alert shadow-lg">
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>URLをコピーしました！</span>
+        <span>URLをコピーしました!</span>
       </div>
     </div>
     <!-- メインコンテンツ -->
     <div class="hero justify-center">
-      <div class="hero-content w-full px-4">
-        <div class="card bg-base-100 shadow-2xl w-full bg-white mx-auto">
+      <div class="hero-content w-full pt-4 p-0">
+        <div class="card bg-base-100 shadow-2xl w-full bg-white">
           <div class="card-body items-center text-center p-6 sm:p-12">
             
             <!-- メッセージ -->
@@ -25,11 +25,11 @@
 
             <!-- URL表示とコピーボタン -->
             <div class="w-full mb-6">
-              <div class="flex items-center justify-between gap-2 border-2 border-amber-300 rounded-full px-3 sm:px-6 py-3">
-                <span class="text-left text-base-content text-xs sm:text-base truncate overflow-hidden min-w-0 " id="group-url"><%= group_url(@group)%></span>
+              <div class="flex items-center gap-2 border-2 border-amber-300 rounded-full px-3 sm:px-6 py-3">
+                <span class="text-left text-base-content text-xs sm:text-sm truncate flex-1 min-w-0" id="group-url"><%= group_url(@group)%></span>
                 <button
                   id="copy-btn"
-                  class="btn btn-sm btn-primary hover:pink-custom-hover text-white border-0 rounded-full normal-case px-4 sm:px-6 flex-shrink-0 ml-auto">
+                  class="btn btn-sm btn-primary hover:pink-custom-hover text-white border-0 rounded-full normal-case px-3 sm:px-6 flex-shrink-0 whitespace-nowrap">
                   コピー
                 </button>
               </div>
@@ -53,8 +53,6 @@ const group_url = document.getElementById('group-url').textContent;
 const flash_message = document.getElementById('flash-message');
 
 copy_btn.addEventListener('click', () => {
-  const copyBtn = document.getElementById('copy-btn');
-  // copyBtn.addEventListener('click', copyToClipboard);
   navigator.clipboard.writeText(group_url).then(() => {
     // フラッシュメッセージを表示
     flash_message.classList.remove('hidden');
