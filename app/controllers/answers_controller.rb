@@ -1,6 +1,5 @@
 class AnswersController < ApplicationController
   before_action :set_group, only: [ :new, :create, :index ]
-  PRICE_QUESTION_ID = 8
 
   def index
     # 各グループで共通の質問を取得
@@ -21,7 +20,8 @@ class AnswersController < ApplicationController
     end
 
     # 5. 集計
-    @price_counts = Answer.where(group_id: @group.id, question_id: PRICE_QUESTION_ID)
+    price_question_id = Question.find_by(text: "希望する価格帯")
+    @price_counts = Answer.where(group_id: @group.id, question_id: price_question_id.id)
                       .group(:content)
                       .count
   end
