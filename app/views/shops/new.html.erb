@@ -1,35 +1,49 @@
 <body class="bg-base-200 min-h-screen">
   <main class="container mx-auto px-4 py-6 max-w-md">
     <%= render 'shared/error_messages', object: @shop%>
-    <%# TODO:店舗名、住所、自動入力対応 %>
     <!-- フォーム本体 -->
     <div class="card bg-base-100 shadow-md rounded-2xl">
       <div class="card-body px-6 py-8">
         <%= form_with model: @shop, url: group_shops_path(@group) do |f| %>
           <h2 class="text-3xl font-bold mb-8">候補登録</h2>
 
-          <!-- リンク -->
-          <div class="mb-6">
-            <label class="block text-xl font-bold mb-3">リンク</label>
-            <%= f.text_field :url, 
-                placeholder: "XXXXXXXXXXX", 
-                class: "input input-bordered w-full text-lg" %>
-          </div>
+          <div
+              data-controller="ogp-form"
+              data-ogp-form-target="container"
+            >
+            <!-- リンク -->
+            <div class="mb-6">
+              <label class="block text-xl font-bold mb-3">リンク</label>
+              <%= f.text_field :url, 
+                  id: "shop-url",
+                  placeholder: "https://example.com", 
+                  class: "input input-bordered w-full text-lg",
+                  data: {
+                    ogp_form_target: "url",
+                    action: "blur->ogp-form#fetchOgp"
+                  }
+              %>
+            </div>
 
-          <!-- 店舗名 -->
-          <div class="mb-6">
-            <label class="block text-xl font-bold mb-3">店舗名</label>
-            <%= f.text_field :name, 
-                placeholder: "XXXXXXXXXXX", 
-                class: "input input-bordered w-full text-lg" %>
-          </div>
+            <!-- 店舗名 -->
+            <div class="mb-6">
+              <label class="block text-xl font-bold mb-3">店舗名</label>
+              <%= f.text_field :name, 
+                  id: "shop-name",
+                  placeholder: "XXXXXXXXXXX", 
+                  class: "input input-bordered w-full text-lg",
+                  data: { ogp_form_target: "name" } %>
+            </div>
 
-          <!-- 場所 -->
-          <div class="mb-8">
-            <label class="block text-xl font-bold mb-3">場所</label>
-            <%= f.text_field :address, 
-                placeholder: "XXXXXXXXXXXX", 
-                class: "input input-bordered w-full text-lg" %>
+            <!-- 場所 -->
+            <div class="mb-8">
+              <label class="block text-xl font-bold mb-3">場所</label>
+              <%= f.text_field :address, 
+                  id: "shop-address",
+                  placeholder: "XXXXXXXXXXXX", 
+                  class: "input input-bordered w-full text-lg",
+                  data: { ogp_form_target: "address" } %>
+            </div>
           </div>
 
           <!-- ボタン -->
