@@ -18,3 +18,6 @@ application.register("hello", HelloController)
 
 import OgpController from "./ogp_controller"
 application.register("ogp", OgpController)
+
+import OgpFormController from "./ogp_form_controller"
+application.register("ogp-form", OgpFormController)
