@@ -1,6 +1,5 @@
 class Shop < ApplicationRecord
   validates :name, presence: true
-  validates :address, presence: true
 
   belongs_to :group
 
@@ -17,4 +16,13 @@ class Shop < ApplicationRecord
       .group(:id)
       .order(Arel.sql("COALESCE(SUM(votes.score), 0) DESC"))
   }
+
+  before_validation :normalize_url
+
+  private
+
+  def normalize_url
+    return if url.blank?
+    self.url = url[%r{https?://[^\s]+}]
+  end
 end
