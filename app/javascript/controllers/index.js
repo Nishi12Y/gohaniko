@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ChangeViewController from "./change_view_controller"
+application.register("change-view", ChangeViewController)
+
 import ChartController from "./chart_controller"
 application.register("chart", ChartController)
 
