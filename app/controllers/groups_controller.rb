@@ -8,6 +8,12 @@ class GroupsController < ApplicationController
         @shops = @group.shops
         @votes = Vote.where(group_id: @group.id)
         @user_token = cookies.encrypted[:user_token]
+
+        @map_api_key = ENV['Maps_API_Key']
+        @map_shops = @shops
+            .where.not(lat: nil, lng: nil)
+            .map { |s| { id: s.id, name: s.name, lat: s.lat.to_f, lng: s.lng.to_f ,url: s.url} }
+        puts("@map_shops: #{@map_shops}")
     end
 
     def create

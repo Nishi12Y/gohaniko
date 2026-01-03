@@ -16,6 +16,9 @@ application.register("copy", CopyController)
 import FlashController from "./flash_controller"
 application.register("flash", FlashController)
 
+import GoogleMapController from "./google_map_controller"
+application.register("google-map", GoogleMapController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
