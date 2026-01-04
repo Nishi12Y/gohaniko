@@ -51,11 +51,20 @@ export default class extends Controller {
       marker.addListener("click", () => {
         // 内容はHTMLでOK（必要なら住所やURLも入れられる）
         const html = `
-          <div style="font-weight:900; margin-bottom:6px;">${this.escapeHtml(s.name)}</div>
-          ${s.url ? `<div style="margin-top:6px;"><a href="${s.url}" target="_blank" rel="noopener">リンクを開く</a></div>` : ""}
+          <div class="gm-iw">
+            <button type="button" class="gm-iw__close" aria-label="閉じる">×</button>
+            <div class="gm-iw__title">${this.escapeHtml(s.name)}</div>
+            ${s.url ? `<div class="gm-iw__link"><a href="${s.url}" target="_blank" rel="noopener">リンクを開く</a></div>` : ""}
+          </div>
         `
         infoWindow.setContent(html)
         infoWindow.open({ anchor: marker, map })
+
+        // 自作の×で閉じる
+        google.maps.event.addListenerOnce(infoWindow, "domready", () => {
+          const btn = document.querySelector(".gm-iw__close")
+          if (btn) btn.addEventListener("click", () => infoWindow.close())
+        })
       })
 
       bounds.extend(pos)
