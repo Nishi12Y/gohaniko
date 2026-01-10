@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_01_025112) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_10_231130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_01_025112) do
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_answers_on_group_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "group_schedule_dates", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.date "date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "date"], name: "index_group_schedule_dates_on_group_id_and_date", unique: true
+    t.index ["group_id"], name: "index_group_schedule_dates_on_group_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -71,6 +80,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_01_025112) do
 
   add_foreign_key "answers", "groups"
   add_foreign_key "answers", "questions"
+  add_foreign_key "group_schedule_dates", "groups"
   add_foreign_key "shops", "groups"
   add_foreign_key "votes", "groups"
   add_foreign_key "votes", "shops"
