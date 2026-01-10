@@ -13,7 +13,6 @@ class GroupsController < ApplicationController
         @map_shops = @shops
             .where.not(lat: nil, lng: nil)
             .map { |s| { id: s.id, name: s.name, lat: s.lat.to_f, lng: s.lng.to_f ,url: s.url} }
-        puts("@map_shops: #{@map_shops}")
     end
 
     def create
