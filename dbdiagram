@@ -13,6 +13,8 @@ Table shops {
   address varchar [note: "お店の住所"]
   url varchar [note: "お店のURL"]
   status integer [not null,note: "0:候補、1:行き先決定"]
+  lat float [note: "緯度"]
+  lng float [note: "経度"]
   group_id integer [not null, ref: > groups.id]
   created_at timestamp
   updated_at timestamp
@@ -44,6 +46,23 @@ Table answers{
   group_id integer [not null,ref: > groups.id]
   user_token varchar [not null, note: "ユーザーを一意に識別するID"]
   content varchar [note: "ユーザーの回答"]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table user_schedules{
+  id integer [primary key]
+  group_schdule_date_id integer [not null,ref: > group_schedule_dates.id]
+  choice integer [not null,note: "0:×、1:△、2:○"]
+  name varchar [not null,note:"ユーザー名"]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table group_schedule_dates{
+  id integer [primary key]
+  date date [not null,note:"候補日"]
+  group_id integer [not null,ref: > groups.id]
   created_at timestamp
   updated_at timestamp
 }
