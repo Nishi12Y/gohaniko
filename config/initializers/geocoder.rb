@@ -25,7 +25,7 @@ Geocoder.configure(
   #   prefix: 'geocoder:'
   # }
   lookup: :google,
-  api_key: ENV['Geocoding_API_Key'],
+  api_key: ENV["Geocoding_API_Key"],
   timeout: 5,
   units: :km,
   language: :ja

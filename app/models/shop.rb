@@ -48,7 +48,7 @@ class Shop < ApplicationRecord
     end
 
     self.lat, self.lng = first.coordinates
-  
+
   rescue => e
     Rails.logger.warn("[Shop geocode failed] address=#{address} #{e.class}: #{e.message}")
     # nil のまま保存を続行
