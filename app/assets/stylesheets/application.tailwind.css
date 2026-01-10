@@ -43,3 +43,33 @@
   }
 }
 
+/* InfoWindowの標準ヘッダー/余白系を詰める */
+.gm-style .gm-style-iw-c {
+  padding: 12px !important;     /* 内側余白を好きに */
+  border-radius: 16px;
+}
+
+.gm-style .gm-style-iw-d {
+  overflow: hidden !important;  /* 余計なスクロール領域を消す */
+}
+
+/* InfoWindow のヘッダー領域（×用）を完全に消す */
+.gm-style .gm-style-iw-ch {
+  display: none !important;
+}
+
+/* 標準の閉じるボタンを隠す（これが余白の原因になりがち） */
+.gm-style button.gm-ui-hover-effect {
+  display: none !important;
+}
+
+/* 自前の吹き出し中身 */
+.gm-iw { position: relative; min-width: 180px; }
+.gm-iw__close {
+  position: absolute; right: 6px;
+  border: none; background: transparent;
+  font-size: 20px; line-height: 1; cursor: pointer;
+}
+.gm-iw__title { font-weight: 700; margin-right: 24px; }
+.gm-iw__addr { font-size: 12px; }
+.gm-iw__link { margin-top: 6px; }

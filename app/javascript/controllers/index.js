@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ChangeViewController from "./change_view_controller"
+application.register("change-view", ChangeViewController)
+
 import ChartController from "./chart_controller"
 application.register("chart", ChartController)
 
@@ -12,6 +15,9 @@ application.register("copy", CopyController)
 
 import FlashController from "./flash_controller"
 application.register("flash", FlashController)
+
+import GoogleMapController from "./google_map_controller"
+application.register("google-map", GoogleMapController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)

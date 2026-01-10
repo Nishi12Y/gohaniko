@@ -2,7 +2,7 @@
 <body class="bg-base-200 min-h-screen">
   <!-- メインコンテンツ -->
   <%# TODO:パーシャルの方に、data-controller="ogp"を移動させる %>
-  <main class="container mx-auto px-4 py-6 max-w-md" data-controller="ogp">
+  <main class="container mx-auto px-4 py-6 max-w-md" data-controller="ogp change-view">
     <%# TODO:sharedのフラッシュメッセージを使えるか調査 %>
     <!-- フラッシュメッセージ -->
     <div id="flash-message" class="hidden fixed top-0 left-0 right-0 z-50">
@@ -44,13 +44,40 @@
       </div>
     </div>
 
+    <!-- 切り替えタブ -->
+    <div class="relative flex justify-center gap-8 mb-4 border-b-2" style="border-color: #F8BE66">
+      <button 
+        class="pb-2 font-bold text-lg relative z-10"
+        data-change-view-target="listTab"
+        data-action="click->change-view#showList"
+      >
+        候補一覧
+      </button>
+      <button 
+        class="pb-2 font-bold text-lg relative z-10"
+        data-change-view-target="mapTab"
+        data-action="click->change-view#showMap"
+      >
+        マップ
+      </button>
+      <!-- スライドする下線 -->
+      <div 
+        class="absolute bottom-0 h-1 transition-all duration-300 ease-in-out"
+        style="background-color: #F8BE66"
+        data-change-view-target="indicator"
+      ></div>
+    </div>
+
     <!-- 候補一覧 -->
-    <div class="mb-4">
-      <h3 class="text-xl font-bold mb-4">候補一覧</h3>
-      
+    <div data-change-view-target="listView">
       <% @shops.each do |shop| %>
         <%= render partial: "shop_card", locals: { shop: shop } %>
       <% end %>
+    </div>
+
+    <!-- マップビュー -->
+    <div class="hidden" data-change-view-target="mapView">
+      <%= render partial: "map", locals: { shops: @shops, map_shops: @map_shops, map_api_key: @map_api_key } %>
     </div>
   </main>
 </body>
