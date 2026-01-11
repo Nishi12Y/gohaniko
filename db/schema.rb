@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_10_231130) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_11_000956) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_10_231130) do
     t.boolean "is_default", default: false, null: false
   end
 
+  create_table "schedule_participants", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.string "name", null: false, comment: "ユーザー名"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "name"], name: "index_schedule_participants_on_group_id_and_name"
+    t.index ["group_id"], name: "index_schedule_participants_on_group_id"
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string "name", null: false, comment: "お店の名前"
     t.string "address", comment: "お店の住所"
@@ -81,6 +90,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_10_231130) do
   add_foreign_key "answers", "groups"
   add_foreign_key "answers", "questions"
   add_foreign_key "group_schedule_dates", "groups"
+  add_foreign_key "schedule_participants", "groups"
   add_foreign_key "shops", "groups"
   add_foreign_key "votes", "groups"
   add_foreign_key "votes", "shops"
