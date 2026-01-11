@@ -52,9 +52,9 @@ Table answers{
 
 Table user_schedules{
   id integer [primary key]
-  group_schdule_date_id integer [not null,ref: > group_schedule_dates.id]
+  group_schedule_date_id integer [not null,ref: > group_schedule_dates.id]
   choice integer [not null,note: "0:×、1:△、2:○"]
-  name varchar [not null,note:"ユーザー名"]
+  schedule_participant_id integer [not null,ref: > schedule_participants.id]
   created_at timestamp
   updated_at timestamp
 }
@@ -63,6 +63,14 @@ Table group_schedule_dates{
   id integer [primary key]
   date date [not null,note:"候補日"]
   group_id integer [not null,ref: > groups.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table schedule_participants{
+  id integer [primary key]
+  group_id integer [not null,ref: > groups.id]
+  name varchar [not null,note:"ユーザー名"]
   created_at timestamp
   updated_at timestamp
 }
