@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :shops, only: [ :new, :create, :destroy ]
     resources :votes, only: [ :new, :create, :index ]
     resources :answers, only: [ :new, :create, :index ]
+    resources :group_schedule_dates, only: [ :index ]
   end
 
   namespace :api do
