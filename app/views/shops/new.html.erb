@@ -20,14 +20,22 @@
                   class: "input input-bordered w-full text-lg",
                   data: {
                     ogp_form_target: "url",
-                    action: "blur->ogp-form#fetchOgp"
                   }
               %>
             </div>
 
             <!-- 店舗名 -->
             <div class="mb-6">
-              <label class="block text-xl font-bold mb-3">店舗名</label>
+              <div class="block">
+                <label class="text-xl font-bold mb-3">店舗名</label>
+                <button 
+                    type="button" 
+                    class="btn btn-outline btn-xs ml-2 mb-2" 
+                    data-action="click->ogp-form#fetchOgp"
+                  >
+                    リンクから店舗名を取得
+                </button>
+              </div>
               <%= f.text_field :name, 
                   id: "shop-name",
                   placeholder: "XXXXXXXXXXX", 
