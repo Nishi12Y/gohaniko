@@ -11,6 +11,13 @@
               data-controller="ogp-form"
               data-ogp-form-target="container"
             >
+            <!-- ローディング（初期は非表示） -->
+            <div
+              data-ogp-form-target="loading"
+              class="hidden absolute inset-0 bg-base-200/70 flex items-center justify-center z-50 rounded-2xl"
+            >
+              <span class="loading loading-spinner loading-lg text-primary"></span>
+            </div>
             <!-- リンク -->
             <div class="mb-6">
               <label class="block text-xl font-bold mb-3">リンク</label>

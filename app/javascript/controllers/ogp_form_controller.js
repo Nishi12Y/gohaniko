@@ -1,13 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["url", "name", "address"]
+  static targets = ["url", "name", "address", "loading"]
 
   async fetchOgp() {
     const raw = this.urlTarget.value
     const normalized = this.normalizeUrl(raw)
 
     if (!normalized) return
+
+    this.showLoading()
 
     // ★ここで先にinputを書き換える
     this.urlTarget.value = normalized
@@ -20,6 +22,8 @@ export default class extends Controller {
       this.fillFields(data)
     } catch (e) {
       console.error("OGP fetch failed", e)
+    } finally {
+      this.hideLoading()
     }
   }
 
@@ -59,5 +63,13 @@ export default class extends Controller {
     url = url.replace(/[)\],.]+$/, "")
 
     return url
+  }
+
+  showLoading() {
+    this.loadingTarget.classList.remove("hidden")
+  }
+
+  hideLoading() {
+    this.loadingTarget.classList.add("hidden")
   }
 }
