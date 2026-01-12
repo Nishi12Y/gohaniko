@@ -1,0 +1,177 @@
+<div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col items-center">
+        <button class="btn btn-primary" onclick="date_modal.showModal()">+候補日を追加</button>
+    </div>
+</div>
+
+<!-- モーダル -->
+<dialog id="date_modal" class="modal">
+  <div class="modal-box max-w-md">
+    <!-- 閉じるボタン -->
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    
+    <h3 class="font-bold text-lg text-center mb-6">候補日を選択してください</h3>
+    
+    <!-- カレンダー部分 -->
+    <div class="flex flex-col items-center">
+      <!-- 月の選択 -->
+      <div class="flex items-center justify-center gap-8 mb-4">
+        <button type="button" class="btn btn-ghost btn-sm" id="prev-month">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+        <span class="text-xl font-semibold" id="current-month">1月</span>
+        <button type="button" class="btn btn-ghost btn-sm" id="next-month">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+      </div>
+      
+      <!-- カレンダーグリッド -->
+      <div class="grid grid-cols-7 gap-2 mb-6 w-full">
+        <!-- 曜日ヘッダー -->
+        <div class="text-center text-sm font-semibold text-gray-600">日</div>
+        <div class="text-center text-sm font-semibold text-gray-600">月</div>
+        <div class="text-center text-sm font-semibold text-gray-600">火</div>
+        <div class="text-center text-sm font-semibold text-gray-600">水</div>
+        <div class="text-center text-sm font-semibold text-gray-600">木</div>
+        <div class="text-center text-sm font-semibold text-gray-600">金</div>
+        <div class="text-center text-sm font-semibold text-gray-600">土</div>
+        
+        <!-- 日付のセル -->
+        <div id="calendar-grid" class="col-span-7 grid grid-cols-7 gap-2">
+          <!-- JavaScriptで動的に生成 -->
+        </div>
+      </div>
+      
+      <!-- 登録ボタン -->
+      <button class="btn btn-primary btn-wide rounded-full" id="register-btn">登録</button>
+    </div>
+  </div>
+  
+  <!-- モーダル外をクリックで閉じる -->
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<script>
+  // カレンダーの状態管理
+  let currentDate = new Date();
+  let selectedDates = new Set();
+  
+  // カレンダーを描画する関数
+  function renderCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    
+    // 月の表示を更新
+    document.getElementById('current-month').textContent = `${month + 1}月`;
+    
+    // 月の最初の日と最後の日を取得
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const firstDayOfWeek = firstDay.getDay();
+    const daysInMonth = lastDay.getDate();
+    
+    // 前月の日付を計算
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+    
+    const calendarGrid = document.getElementById('calendar-grid');
+    calendarGrid.innerHTML = '';
+    
+    // 前月の日付を追加
+    for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+      const day = prevMonthLastDay - i;
+      const cell = createDateCell(day, true);
+      calendarGrid.appendChild(cell);
+    }
+    
+    // 当月の日付を追加
+    for (let day = 1; day <= daysInMonth; day++) {
+      const cell = createDateCell(day, false);
+      calendarGrid.appendChild(cell);
+    }
+    
+    // 次月の日付を追加（グリッドを埋めるため）
+    const totalCells = firstDayOfWeek + daysInMonth;
+    const remainingCells = 7 - (totalCells % 7);
+    if (remainingCells < 7) {
+      for (let day = 1; day <= remainingCells; day++) {
+        const cell = createDateCell(day, true);
+        calendarGrid.appendChild(cell);
+      }
+    }
+  }
+  
+  // 日付セルを作成する関数
+  function createDateCell(day, isOtherMonth) {
+    const cell = document.createElement('button');
+    cell.type = 'button';
+    cell.textContent = day;
+    cell.className = 'aspect-square flex items-center justify-center rounded-lg text-sm transition-colors';
+    
+    if (isOtherMonth) {
+      cell.className += ' text-gray-300 cursor-default';
+    } else {
+      const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${day}`;
+      
+      if (selectedDates.has(dateKey)) {
+        cell.className += ' bg-red-300 text-white hover:bg-red-400';
+      } else {
+        cell.className += ' hover:bg-gray-100 cursor-pointer';
+      }
+      
+      cell.addEventListener('click', () => {
+        if (selectedDates.has(dateKey)) {
+          selectedDates.delete(dateKey);
+        } else {
+          selectedDates.add(dateKey);
+        }
+        renderCalendar();
+      });
+    }
+    
+    return cell;
+  }
+  
+  // 前月ボタン
+  document.getElementById('prev-month').addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+  });
+  
+  // 次月ボタン
+  document.getElementById('next-month').addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+  });
+  
+  // 登録ボタン
+  document.getElementById('register-btn').addEventListener('click', () => {
+    if (selectedDates.size === 0) {
+      alert('候補日を選択してください');
+      return;
+    }
+    
+    // 選択された日付を処理
+    console.log('選択された日付:', Array.from(selectedDates));
+    
+    // ここで実際の登録処理を行う
+    // 例: フォームに値をセットしてサーバーに送信
+    
+    // モーダルを閉じる
+    document.getElementById('date_modal').close();
+    
+    // 選択をクリア
+    selectedDates.clear();
+    renderCalendar();
+  });
+  
+  // 初期表示
+  renderCalendar();
+</script>
