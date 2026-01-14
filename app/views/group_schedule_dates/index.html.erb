@@ -2,6 +2,9 @@
     <div class="flex flex-col items-center">
         <button class="btn btn-primary" onclick="date_modal.showModal()">+候補日を追加</button>
     </div>
+    <%= form_with url: group_group_schedule_dates_path(@group), method: :post, id: "date-form", local: true do |f| %>
+        <div id="selected-dates-container"></div>
+    <% end %>
 </div>
 
 <!-- モーダル -->
@@ -158,11 +161,24 @@
       return;
     }
     
-    // 選択された日付を処理
-    console.log('選択された日付:', Array.from(selectedDates));
+    // 選択された日付をフォームにセット
+    const container = document.getElementById('selected-dates-container');
+    container.innerHTML = ''; // 既存のinputをクリア
     
-    // ここで実際の登録処理を行う
-    // 例: フォームに値をセットしてサーバーに送信
+    selectedDates.forEach(dateKey => {
+      const [year, month, day] = dateKey.split('-');
+      const date = new Date(parseInt(year), parseInt(month), parseInt(day));
+      const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD形式
+      
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'group_schedule_date[candidate_dates][]';
+      input.value = formattedDate;
+      container.appendChild(input);
+    });
+    
+    // フォームを送信
+    document.getElementById('date-form').submit();
     
     // モーダルを閉じる
     document.getElementById('date_modal').close();
