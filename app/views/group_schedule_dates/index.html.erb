@@ -168,7 +168,7 @@
     selectedDates.forEach(dateKey => {
       const [year, month, day] = dateKey.split('-');
       const date = new Date(parseInt(year), parseInt(month), parseInt(day));
-      const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD形式
+      const formattedDate = date.toLocaleDateString('ja-JP').replaceAll('/','-'); // YYYY-MM-DD形式
       
       const input = document.createElement('input');
       input.type = 'hidden';
