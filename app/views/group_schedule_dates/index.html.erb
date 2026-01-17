@@ -8,9 +8,7 @@
         <% if @group_schedule_dates.present? %>
         <!-- 回答するボタン -->
         <div class="flex flex-col items-center mt-6">
-            <button class="btn btn-error">
-                回答する
-            </button>
+            <%= link_to "回答する", new_group_user_schedule_path(@group), class: "btn btn-error" %>
         </div>
 
         <div class="w-full max-w-md mt-8">
