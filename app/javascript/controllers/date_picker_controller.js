@@ -2,9 +2,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  static values = {selectedDates: Array}
   static targets = ["modal", "grid", "monthLabel", "hiddenContainer", "form"]
 
   connect() {
+    // 既存候補日（ロック対象）
+    this.locked = new Set(this.selectedDatesValue || [])
     this.current = new Date()
     this.selected = new Set()
     this.render()
@@ -24,6 +27,7 @@ export default class extends Controller {
   }
 
   toggle(dateStr) {
+    if (this.locked.has(dateStr)) return
     if (this.selected.has(dateStr)) this.selected.delete(dateStr)
     else this.selected.add(dateStr)
     this.render()
@@ -100,8 +104,17 @@ export default class extends Controller {
       return btn
     }
 
-    const selected = this.selected.has(dateStr)
-    btn.className += selected
+    const isLocked = this.locked.has(dateStr)
+    const isSelected = this.selected.has(dateStr)
+
+    if (isLocked) {
+      // 既存：見た目を固定（例：グレー背景）＆クリック不可
+      btn.className += " bg-gray-200 text-gray-500 cursor-not-allowed"
+      btn.disabled = true
+      return btn
+    }
+
+    btn.className += isSelected
       ? " bg-red-300 text-white hover:bg-red-400"
       : " hover:bg-gray-100 cursor-pointer"
 
