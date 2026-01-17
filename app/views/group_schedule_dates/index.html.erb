@@ -1,232 +1,86 @@
-<div class="container mx-auto px-4 py-8">
-    <div class="flex flex-col items-center">
-        <button class="btn btn-primary" onclick="date_modal.showModal()">+候補日を追加</button>
-    </div>
+<div data-controller="date-picker">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col items-center">
+            <button class="btn btn-primary" data-action="click->date-picker#open">+候補日を追加</button>
+        </div>
 
-    <!-- 候補日が登録されている場合の表示 -->
-    <% if @group_schedule_dates.present? %>
-    <!-- 回答するボタン -->
-    <div class="flex flex-col items-center mt-6">
-        <button class="btn btn-error">
-            回答する
-        </button>
-    </div>
+        <!-- 候補日が登録されている場合の表示 -->
+        <% if @group_schedule_dates.present? %>
+        <!-- 回答するボタン -->
+        <div class="flex flex-col items-center mt-6">
+            <button class="btn btn-error">
+                回答する
+            </button>
+        </div>
 
-    <div class="w-full max-w-md mt-8">
-        <div class="overflow-x-auto">
-            <table class="table w-full border-collapse">
-                <thead>
-                    <tr>
-                        <th class="border border-gray-300 bg-white"></th>
-                        <% @group_schedule_dates.each do |date| %>
-                            <th class="border border-gray-300 bg-orange-200 text-center p-3">
-                                <%= date.date.strftime('%-m/%-d') %>
-                            </th>
-                        <% end %>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="border border-gray-300 bg-white p-3 text-center font-semibold">
-                            回答数
-                        </td>
-                        <% @group_schedule_dates.each do |date| %>
-                            <td class="border border-gray-300 bg-white text-center p-3">
-                                <%# <%= date.answers_count || 0 %> %>
+        <div class="w-full max-w-md mt-8">
+            <div class="overflow-x-auto">
+                <table class="table w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="border border-gray-300 bg-white"></th>
+                            <% @group_schedule_dates.each do |date| %>
+                                <th class="border border-gray-300 bg-orange-200 text-center p-3">
+                                    <%= date.date.strftime('%-m/%-d') %>
+                                </th>
+                            <% end %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border border-gray-300 bg-white p-3 text-center font-semibold">
+                                回答数
                             </td>
-                        <% end %>
-                    </tr>
-                </tbody>
-            </table>
+                            <% @group_schedule_dates.each do |date| %>
+                                <td class="border border-gray-300 bg-white text-center p-3">
+                                    <%# <%= date.answers_count || 0 %> %>
+                                </td>
+                            <% end %>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <% end %>
+        <%= form_with url: group_group_schedule_dates_path(@group),
+                method: :post,
+                data: { date_picker_target: "form" },
+                local: true do %>
+            <div data-date-picker-target="hiddenContainer"></div>
+        <% end %>
     </div>
-    <% end %>
-    <%= form_with url: group_group_schedule_dates_path(@group), method: :post, id: "date-form", local: true do |f| %>
-        <div id="selected-dates-container"></div>
-    <% end %>
+    <!-- モーダル -->
+    <dialog data-date-picker-target="modal" class="modal items-start pt-20">
+        <div class="modal-box max-w-md rounded-3xl mx-4">
+        <button type="button"
+                class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                data-action="click->date-picker#close">✕</button>
+
+        <h3 class="font-bold text-lg text-center mb-6">候補日を選択してください</h3>
+
+        <div class="flex items-center justify-center gap-8 mb-4">
+            <button type="button" class="btn btn-ghost btn-sm" data-action="click->date-picker#prevMonth">‹</button>
+            <span class="text-xl font-semibold w-16 text-center" data-date-picker-target="monthLabel"></span>
+            <button type="button" class="btn btn-ghost btn-sm" data-action="click->date-picker#nextMonth">›</button>
+        </div>
+
+        <div class="grid grid-cols-7 gap-2 mb-2 w-full text-center text-sm font-semibold text-gray-600">
+            <div>日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div>
+        </div>
+
+        <div class="grid grid-cols-7 gap-2 mb-6 w-full" data-date-picker-target="grid"></div>
+
+        <div class="flex justify-center">
+        <button type="button"
+                class="btn btn-primary btn-wide rounded-full"
+                data-action="click->date-picker#submit">
+            登録
+        </button>
+        </div>
+        </div>
+
+        <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+        </form>
+    </dialog>
 </div>
-
-<!-- モーダル -->
-<dialog id="date_modal" class="modal">
-  <div class="modal-box max-w-md">
-    <!-- 閉じるボタン -->
-    <form method="dialog">
-      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-    </form>
-    
-    <h3 class="font-bold text-lg text-center mb-6">候補日を選択してください</h3>
-    
-    <!-- カレンダー部分 -->
-    <div class="flex flex-col items-center">
-      <!-- 月の選択 -->
-      <div class="flex items-center justify-center gap-8 mb-4">
-        <button type="button" class="btn btn-ghost btn-sm" id="prev-month">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-          </svg>
-        </button>
-        <span class="text-xl font-semibold" id="current-month">1月</span>
-        <button type="button" class="btn btn-ghost btn-sm" id="next-month">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
-        </button>
-      </div>
-      
-      <!-- カレンダーグリッド -->
-      <div class="grid grid-cols-7 gap-2 mb-6 w-full">
-        <!-- 曜日ヘッダー -->
-        <div class="text-center text-sm font-semibold text-gray-600">日</div>
-        <div class="text-center text-sm font-semibold text-gray-600">月</div>
-        <div class="text-center text-sm font-semibold text-gray-600">火</div>
-        <div class="text-center text-sm font-semibold text-gray-600">水</div>
-        <div class="text-center text-sm font-semibold text-gray-600">木</div>
-        <div class="text-center text-sm font-semibold text-gray-600">金</div>
-        <div class="text-center text-sm font-semibold text-gray-600">土</div>
-        
-        <!-- 日付のセル -->
-        <div id="calendar-grid" class="col-span-7 grid grid-cols-7 gap-2">
-          <!-- JavaScriptで動的に生成 -->
-        </div>
-      </div>
-      
-      <!-- 登録ボタン -->
-      <button class="btn btn-primary btn-wide rounded-full" id="register-btn">登録</button>
-    </div>
-  </div>
-  
-  <!-- モーダル外をクリックで閉じる -->
-  <form method="dialog" class="modal-backdrop">
-    <button>close</button>
-  </form>
-</dialog>
-
-<script>
-  // カレンダーの状態管理
-  let currentDate = new Date();
-  let selectedDates = new Set();
-  
-  // カレンダーを描画する関数
-  function renderCalendar() {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    
-    // 月の表示を更新
-    document.getElementById('current-month').textContent = `${month + 1}月`;
-    
-    // 月の最初の日と最後の日を取得
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const firstDayOfWeek = firstDay.getDay();
-    const daysInMonth = lastDay.getDate();
-    
-    // 前月の日付を計算
-    const prevMonthLastDay = new Date(year, month, 0).getDate();
-    
-    const calendarGrid = document.getElementById('calendar-grid');
-    calendarGrid.innerHTML = '';
-    
-    // 前月の日付を追加
-    for (let i = firstDayOfWeek - 1; i >= 0; i--) {
-      const day = prevMonthLastDay - i;
-      const cell = createDateCell(day, true);
-      calendarGrid.appendChild(cell);
-    }
-    
-    // 当月の日付を追加
-    for (let day = 1; day <= daysInMonth; day++) {
-      const cell = createDateCell(day, false);
-      calendarGrid.appendChild(cell);
-    }
-    
-    // 次月の日付を追加（グリッドを埋めるため）
-    const totalCells = firstDayOfWeek + daysInMonth;
-    const remainingCells = 7 - (totalCells % 7);
-    if (remainingCells < 7) {
-      for (let day = 1; day <= remainingCells; day++) {
-        const cell = createDateCell(day, true);
-        calendarGrid.appendChild(cell);
-      }
-    }
-  }
-  
-  // 日付セルを作成する関数
-  function createDateCell(day, isOtherMonth) {
-    const cell = document.createElement('button');
-    cell.type = 'button';
-    cell.textContent = day;
-    cell.className = 'aspect-square flex items-center justify-center rounded-lg text-sm transition-colors';
-    
-    if (isOtherMonth) {
-      cell.className += ' text-gray-300 cursor-default';
-    } else {
-      const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${day}`;
-      
-      if (selectedDates.has(dateKey)) {
-        cell.className += ' bg-red-300 text-white hover:bg-red-400';
-      } else {
-        cell.className += ' hover:bg-gray-100 cursor-pointer';
-      }
-      
-      cell.addEventListener('click', () => {
-        if (selectedDates.has(dateKey)) {
-          selectedDates.delete(dateKey);
-        } else {
-          selectedDates.add(dateKey);
-        }
-        renderCalendar();
-      });
-    }
-    
-    return cell;
-  }
-  
-  // 前月ボタン
-  document.getElementById('prev-month').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar();
-  });
-  
-  // 次月ボタン
-  document.getElementById('next-month').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar();
-  });
-  
-  // 登録ボタン
-  document.getElementById('register-btn').addEventListener('click', () => {
-    if (selectedDates.size === 0) {
-      alert('候補日を選択してください');
-      return;
-    }
-    
-    // 選択された日付をフォームにセット
-    const container = document.getElementById('selected-dates-container');
-    container.innerHTML = ''; // 既存のinputをクリア
-    
-    selectedDates.forEach(dateKey => {
-      const [year, month, day] = dateKey.split('-');
-      const date = new Date(parseInt(year), parseInt(month), parseInt(day));
-      const formattedDate = date.toLocaleDateString('ja-JP').replaceAll('/','-'); // YYYY-MM-DD形式
-      
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = 'group_schedule_date[candidate_dates][]';
-      input.value = formattedDate;
-      container.appendChild(input);
-    });
-    
-    // フォームを送信
-    document.getElementById('date-form').submit();
-    
-    // モーダルを閉じる
-    document.getElementById('date_modal').close();
-    
-    // 選択をクリア
-    selectedDates.clear();
-    renderCalendar();
-  });
-  
-  // 初期表示
-  renderCalendar();
-</script>
