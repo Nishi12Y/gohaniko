@@ -2,7 +2,7 @@ class GroupScheduleDatesController < ApplicationController
 
   def index
     @group = Group.find_by(uuid: params[:group_uuid])
-    @group_schedule_dates = GroupScheduleDate.new
+    @group_schedule_dates = @group.group_schedule_dates.order(:date)
   end
 
   def create

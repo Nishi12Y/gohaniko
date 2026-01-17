@@ -2,6 +2,45 @@
     <div class="flex flex-col items-center">
         <button class="btn btn-primary" onclick="date_modal.showModal()">+候補日を追加</button>
     </div>
+
+    <!-- 候補日が登録されている場合の表示 -->
+    <% if @group_schedule_dates.present? %>
+    <!-- 回答するボタン -->
+    <div class="flex flex-col items-center mt-6">
+        <button class="btn btn-error">
+            回答する
+        </button>
+    </div>
+
+    <div class="w-full max-w-md mt-8">
+        <div class="overflow-x-auto">
+            <table class="table w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="border border-gray-300 bg-white"></th>
+                        <% @group_schedule_dates.each do |date| %>
+                            <th class="border border-gray-300 bg-orange-200 text-center p-3">
+                                <%= date.date.strftime('%-m/%-d') %>
+                            </th>
+                        <% end %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border border-gray-300 bg-white p-3 text-center font-semibold">
+                            回答数
+                        </td>
+                        <% @group_schedule_dates.each do |date| %>
+                            <td class="border border-gray-300 bg-white text-center p-3">
+                                <%# <%= date.answers_count || 0 %> %>
+                            </td>
+                        <% end %>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <% end %>
     <%= form_with url: group_group_schedule_dates_path(@group), method: :post, id: "date-form", local: true do |f| %>
         <div id="selected-dates-container"></div>
     <% end %>
