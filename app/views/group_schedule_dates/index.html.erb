@@ -25,6 +25,27 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <% @participants.each do |participant| %>
+                            <tr>
+                                <td class="border border-gray-300 bg-white p-3 text-center font-semibold">
+                                    <%= participant.name %>
+                                </td>
+                                <% @group_schedule_dates.each do |date| %>
+                                    <% choice = @choice_map[[participant.id, date.id]] %>
+                                        <td class="text-center">
+                                            <%# choiceがnilなら未回答 %>
+                                            <%=
+                                                case choice
+                                                when "ok"    then "○"
+                                                when "maybe" then "△"
+                                                when "ng"    then "×"
+                                                else "—"
+                                                end
+                                            %>
+                                        </td>
+                                    <% end %>
+                                <% end %>
+                            </tr>
                         <tr>
                             <td class="border border-gray-300 bg-white p-3 text-center font-semibold">
                                 回答数

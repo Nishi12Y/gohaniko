@@ -3,6 +3,20 @@ class GroupScheduleDatesController < ApplicationController
   def index
     @group = Group.find_by(uuid: params[:group_uuid])
     @group_schedule_dates = @group.group_schedule_dates.order(:date)
+    @participants = @group.schedule_participants.order(:created_at)
+
+    # このグループの候補日に紐づく回答だけ取る（N+1回避でincludes）
+    schedules = UserSchedule
+      .joins(:group_schedule_date)
+      .where(group_schedule_dates: { group_id: @group.id })
+      .includes(:group_schedule_date, :schedule_participant)
+
+    # (participant_id, date_id) => choice の検索用ハッシュ
+    @choice_map = schedules.each_with_object({}) do |us, h|
+      h[[us.schedule_participant_id, us.group_schedule_date_id]] = us.choice
+    end
+
+    puts ("@choice_map:" + @choice_map.inspect)
   end
 
   def create
