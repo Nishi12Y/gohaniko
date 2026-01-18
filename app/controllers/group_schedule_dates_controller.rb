@@ -16,7 +16,14 @@ class GroupScheduleDatesController < ApplicationController
       h[[us.schedule_participant_id, us.group_schedule_date_id]] = us.choice
     end
 
-    puts ("@choice_map:" + @choice_map.inspect)
+    @ok_counts_by_date = UserSchedule
+    .joins(:group_schedule_date)
+    .where(
+      group_schedule_dates: { group_id: @group.id },
+      choice: UserSchedule.choices[:ok]
+    )
+    .group(:group_schedule_date_id)
+    .count
   end
 
   def create
