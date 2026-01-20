@@ -5,6 +5,16 @@ class UserSchedulesController < ApplicationController
     @group_schedule_dates = @group.group_schedule_dates.order(:date)
   end
 
+  def show
+    @group = Group.find_by(uuid: params[:group_uuid])
+    @participant = ScheduleParticipant.find(params[:id])
+    @group_schedule_dates = @group.group_schedule_dates.order(:date)
+    @user_schedules = UserSchedule
+      .where(schedule_participant_id: @participant.id)
+      .index_by(&:group_schedule_date_id)
+    
+  end
+
   def create
     @group = Group.find_by(uuid: params[:group_uuid])
     ActiveRecord::Base.transaction do
