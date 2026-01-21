@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-[#FFF8E7] flex items-center justify-center px-6 py-8">
     <div class="w-full max-w-md">
-    <%= form_with url: group_user_schedule_path(@group,@participant.id), method: :post, local: true do |f| %>
+    <%= form_with url: group_user_schedule_path(@group,@participant.id),method: :patch, local: true do |f| %>
       <!-- 日付と投票セクション -->
       <div class="mb-8">
         
