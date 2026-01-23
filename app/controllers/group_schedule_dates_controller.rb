@@ -1,7 +1,7 @@
 class GroupScheduleDatesController < ApplicationController
+  before_action :set_group
 
   def index
-    @group = Group.find_by(uuid: params[:group_uuid])
     @group_schedule_dates = @group.group_schedule_dates.order(:date)
     @participants = @group.schedule_participants.order(:created_at)
 
@@ -27,7 +27,6 @@ class GroupScheduleDatesController < ApplicationController
   end
 
   def create
-    @group = Group.find_by(uuid: params[:group_uuid])
 
     dates = group_schedule_dates_params[:candidate_dates].reject(&:blank?)
 
@@ -42,6 +41,14 @@ class GroupScheduleDatesController < ApplicationController
       # ここに来た時点で transaction はロールバック済み
       flash.now[:alert] = "登録に失敗しました：#{e.record.errors.full_messages.join('、')}"
       render :new, status: :unprocessable_entity
+  end
+
+  def destroy
+    @group_schedule_date = @group.group_schedule_dates.find(params[:id])
+    @group_schedule_date.destroy!
+    redirect_to group_group_schedule_dates_path(@group), notice: "候補日を削除しました"
+  rescue ActiveRecord::RecordNotFound
+    redirect_to group_group_schedule_dates_path(@group), alert: "候補日が見つかりません"
   end
 
   private

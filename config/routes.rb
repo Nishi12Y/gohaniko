@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :shops, only: [ :new, :create, :destroy ]
     resources :votes, only: [ :new, :create, :index ]
     resources :answers, only: [ :new, :create, :index ]
-    resources :group_schedule_dates, only: [ :index, :create ]
+    resources :group_schedule_dates, only: [ :index, :create, :destroy ]
     resources :user_schedules, only: [ :new, :create ,:edit, :update]
   end
 
