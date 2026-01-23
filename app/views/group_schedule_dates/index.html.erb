@@ -1,6 +1,10 @@
 <div data-controller="date-picker" data-date-picker-selected-dates-value="<%= @group_schedule_dates.map(&:date).map(&:to_s) %>">
     <div class="container mx-auto px-4 py-8">
-        <div class="flex flex-col items-center gap-4">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold">スケジュール調整画面</h1>
+            <%= link_to "グループページへ", group_path(@group), class: "btn btn-sm bg-stone-400 hover:bg-stone-500 text-white rounded-full" %>
+        </div>
+        <div class="flex flex-col items-center gap-4 mt-10">
             <button class="btn btn-primary w-64" data-action="click->date-picker#open">+候補日を追加</button>
             
             <!-- 候補日が登録されている場合の表示 -->
