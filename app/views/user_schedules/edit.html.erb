@@ -1,0 +1,10 @@
+<%= render 'shared/error_messages', object: @form %>
+<div class="min-h-screen flex items-center justify-center px-6 py-8">
+    <%= render 'schedule_form', 
+      url: group_user_schedule_path(@group, @participant), 
+      method: :patch, 
+      # group_schedule_dates: @group_schedule_dates,
+      # user_schedules: @user_schedules,
+      # participant: @participant,
+      submit_label: "更新" %>
+</div>

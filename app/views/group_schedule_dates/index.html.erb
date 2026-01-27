@@ -1,0 +1,114 @@
+<div data-controller="date-picker" data-date-picker-selected-dates-value="<%= @group_schedule_dates.map(&:date).map(&:to_s) %>">
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold">スケジュール調整画面</h1>
+            <%= link_to "グループページへ", group_path(@group), class: "btn btn-sm bg-stone-400 hover:bg-stone-500 text-white rounded-full" %>
+        </div>
+        <div class="flex flex-col items-center gap-4 mt-10">
+            <button class="btn btn-primary w-64" data-action="click->date-picker#open">+候補日を追加</button>
+            
+            <!-- 候補日が登録されている場合の表示 -->
+            <% if @group_schedule_dates.present? %>
+                <%= link_to "回答する", new_group_user_schedule_path(@group), class: "btn btn-neutral w-64" %>
+            <% end %>
+        </div>
+
+        <!-- 候補日が登録されている場合の表示 -->
+        <% if @group_schedule_dates.present? %>
+        <div class="w-full mt-8">
+            <div class="overflow-x-auto">
+                <table class="table w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="border border-gray-300 bg-white sticky left-0 z-10"></th>
+                            <% @group_schedule_dates.each do |date| %>
+                                <th class="border border-gray-300 bg-orange-200 text-center p-3">
+                                    <div class="flex flex-col items-center gap-2">
+                                        <div><%= date.date.strftime('%-m/%-d') %></div>
+                                        <%= link_to "×", group_group_schedule_date_path(@group, date), 
+                                            data: { turbo_method: :delete, turbo_confirm: "この日付を削除してもよろしいですか？" },
+                                            class: "text-red-600 hover:text-red-800 font-bold text-lg underline" %>
+                                    </div>
+                                </th>
+                            <% end %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @participants.each do |participant| %>
+                            <tr>
+                                <td class="border border-gray-300 bg-white p-3 text-center font-semibold sticky left-0 z-10">
+                                    <%= link_to participant.name, edit_group_user_schedule_path(@group, participant.id), class: "link link-accent" %>
+                                </td>
+                                <% @group_schedule_dates.each do |date| %>
+                                    <% choice = @choice_map[[participant.id, date.id]] %>
+                                        <td class="text-center border border-gray-300">
+                                            <%# choiceがnilなら未回答 %>
+                                            <%=
+                                                case choice
+                                                when "ok"    then "○"
+                                                when "maybe" then "△"
+                                                when "ng"    then "×"
+                                                else "—"
+                                                end
+                                            %>
+                                        </td>
+                                    <% end %>
+                            </tr>
+                        <% end %>
+                        <tr>
+                            <td class="border border-gray-300 bg-white p-3 text-center font-semibold sticky left-0 z-10">
+                                ○回答数
+                            </td>
+                            <% @group_schedule_dates.each do |date| %>
+                                <td class="border border-gray-300 bg-white text-center p-3">
+                                    <%= @ok_counts_by_date[date.id] || "-" %>
+                                </td>
+                            <% end %>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <% end %>
+        <%= form_with url: group_group_schedule_dates_path(@group),
+                method: :post,
+                data: { date_picker_target: "form" },
+                local: true do %>
+            <div data-date-picker-target="hiddenContainer"></div>
+        <% end %>
+    </div>
+    <!-- モーダル -->
+    <dialog data-date-picker-target="modal" class="modal items-start pt-20">
+        <div class="modal-box max-w-md rounded-3xl mx-4">
+        <button type="button"
+                class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                data-action="click->date-picker#close">✕</button>
+
+        <h3 class="font-bold text-lg text-center mb-6">候補日を選択してください</h3>
+
+        <div class="flex items-center justify-center gap-8 mb-4">
+            <button type="button" class="btn btn-ghost btn-sm" data-action="click->date-picker#prevMonth">‹</button>
+            <span class="text-xl font-semibold w-16 text-center" data-date-picker-target="monthLabel"></span>
+            <button type="button" class="btn btn-ghost btn-sm" data-action="click->date-picker#nextMonth">›</button>
+        </div>
+
+        <div class="grid grid-cols-7 gap-2 mb-2 w-full text-center text-sm font-semibold text-gray-600">
+            <div>日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div>
+        </div>
+
+        <div class="grid grid-cols-7 gap-2 mb-6 w-full" data-date-picker-target="grid"></div>
+
+        <div class="flex justify-center">
+        <button type="button"
+                class="btn btn-primary btn-wide rounded-full"
+                data-action="click->date-picker#submit">
+            登録
+        </button>
+        </div>
+        </div>
+
+        <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+        </form>
+    </dialog>
+</div>

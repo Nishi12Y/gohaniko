@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_01_025112) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_11_010523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_01_025112) do
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_answers_on_group_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "group_schedule_dates", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.date "date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "date"], name: "index_group_schedule_dates_on_group_id_and_date", unique: true
+    t.index ["group_id"], name: "index_group_schedule_dates_on_group_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -43,6 +52,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_01_025112) do
     t.boolean "is_default", default: false, null: false
   end
 
+  create_table "schedule_participants", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.string "name", null: false, comment: "ユーザー名"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "name"], name: "index_schedule_participants_on_group_id_and_name"
+    t.index ["group_id"], name: "index_schedule_participants_on_group_id"
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string "name", null: false, comment: "お店の名前"
     t.string "address", comment: "お店の住所"
@@ -54,6 +72,17 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_01_025112) do
     t.float "lat"
     t.float "lng"
     t.index ["group_id"], name: "index_shops_on_group_id"
+  end
+
+  create_table "user_schedules", force: :cascade do |t|
+    t.bigint "group_schedule_date_id", null: false
+    t.bigint "schedule_participant_id", null: false
+    t.integer "choice", null: false, comment: "0:×、1:△、2:○"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_schedule_date_id", "schedule_participant_id"], name: "index_user_schedules_on_date_and_participant", unique: true
+    t.index ["group_schedule_date_id"], name: "index_user_schedules_on_group_schedule_date_id"
+    t.index ["schedule_participant_id"], name: "index_user_schedules_on_schedule_participant_id"
   end
 
   create_table "votes", force: :cascade do |t|
@@ -71,7 +100,11 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_01_025112) do
 
   add_foreign_key "answers", "groups"
   add_foreign_key "answers", "questions"
+  add_foreign_key "group_schedule_dates", "groups"
+  add_foreign_key "schedule_participants", "groups"
   add_foreign_key "shops", "groups"
+  add_foreign_key "user_schedules", "group_schedule_dates"
+  add_foreign_key "user_schedules", "schedule_participants"
   add_foreign_key "votes", "groups"
   add_foreign_key "votes", "shops"
 end

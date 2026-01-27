@@ -13,6 +13,9 @@ application.register("chart", ChartController)
 import CopyController from "./copy_controller"
 application.register("copy", CopyController)
 
+import DatePickerController from "./date_picker_controller"
+application.register("date-picker", DatePickerController)
+
 import FlashController from "./flash_controller"
 application.register("flash", FlashController)
 
