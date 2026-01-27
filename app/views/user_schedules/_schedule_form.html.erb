@@ -1,0 +1,71 @@
+
+<div class="w-full max-w-md">
+<%= form_with url: url, method: method, local: true do %>
+
+    <!-- 日付と投票セクション -->
+    <div class="mb-8">
+    <p class="text-gray-700 mb-6 font-medium">出欠を入力してください</p>
+
+    <% selected = defined?(@form) ? @form.choice_by_date_id : {} %>
+
+    <div class="space-y-4">
+        <% @group_schedule_dates.each_with_index do |date, index| %>
+        <div class="flex items-center gap-4">
+            <div class="w-16 text-gray-700 font-medium">
+            <%= date.date.strftime('%-m/%-d') %>
+            </div>
+
+            <%= hidden_field_tag "schedules[#{index}][group_schedule_date_id]", date.id %>
+
+            <div class="flex gap-3">
+            <label class="cursor-pointer">
+                <%= radio_button_tag "schedules[#{index}][choice]", 2,
+                    selected[date.id] == 2,
+                    class: "hidden peer", id: "good_#{index}" %>
+                <div class="w-10 h-10 rounded-full border-2 border-[#F5C869] flex items-center justify-center peer-checked:bg-[#F5C869]/70 peer-checked:border-[#F5C869] hover:bg-[#F5C869]/20 transition-colors">
+                <span class="text-[#F5C869] text-xl font-bold">○</span>
+                </div>
+            </label>
+
+            <label class="cursor-pointer">
+                <%= radio_button_tag "schedules[#{index}][choice]", 1,
+                    selected[date.id] == 1,
+                    class: "hidden peer", id: "maybe_#{index}" %>
+                <div class="w-10 h-10 rounded-full border-2 border-[#F5C869] flex items-center justify-center peer-checked:bg-[#F5C869]/70 peer-checked:border-[#F5C869] hover:bg-[#F5C869]/20 transition-colors">
+                <span class="text-[#F5C869] text-xl font-bold">△</span>
+                </div>
+            </label>
+
+            <label class="cursor-pointer">
+                <%= radio_button_tag "schedules[#{index}][choice]", 0,
+                    selected[date.id] == 0,
+                    class: "hidden peer", id: "bad_#{index}" %>
+                <div class="w-10 h-10 rounded-full border-2 border-[#F5C869] flex items-center justify-center peer-checked:bg-[#F5C869]/70 peer-checked:border-[#F5C869] hover:bg-[#F5C869]/20 transition-colors">
+                <span class="text-[#F5C869] text-xl font-bold">×</span>
+                </div>
+            </label>
+            </div>
+        </div>
+        <% end %>
+    </div>
+    </div>
+
+    <!-- 名前入力 -->
+    <div class="mb-8">
+    <label for="name" class="block text-gray-700 mb-3 font-medium">名前</label>
+    <%= text_field_tag "schedule_participant[name]",
+            (defined?(@form) ? @form.name : ""),
+            class: "w-full px-4 py-3 rounded-lg border-0 bg-white shadow-sm focus:ring-2 focus:ring-[#F5C869] focus:outline-none",
+            id: "name" %>
+    </div>
+
+    <div class="flex gap-4 justify-center">
+    <%= link_to "戻る", group_group_schedule_dates_path(@group),
+            class: "btn btn-neutral rounded-full px-12 text-xl" %>
+
+    <%= submit_tag submit_label,
+            class: "btn btn-primary text-white rounded-full px-12 text-xl" %>
+    </div>
+
+<% end %>
+</div>
