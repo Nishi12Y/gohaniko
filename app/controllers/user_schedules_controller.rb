@@ -1,87 +1,77 @@
 class UserSchedulesController < ApplicationController
+  before_action :set_group
 
   def new
     @group = Group.find_by(uuid: params[:group_uuid])
     @group_schedule_dates = @group.group_schedule_dates.order(:date)
+
+    @form = UserScheduleForm.new(
+      group: @group,
+      participant: nil,
+      name: "",
+      schedules: @group_schedule_dates.map { |d| { group_schedule_date_id: d.id, choice: nil } }
+    )
   end
 
   def edit
     @group = Group.find_by(uuid: params[:group_uuid])
     @participant = ScheduleParticipant.find(params[:id])
     @group_schedule_dates = @group.group_schedule_dates.order(:date)
-    @user_schedules = UserSchedule
-      .where(schedule_participant_id: @participant.id)
-      .index_by(&:group_schedule_date_id)
+
+    existing = UserSchedule.where(schedule_participant_id: @participant.id)
+                          .index_by(&:group_schedule_date_id)
+
+    schedules = @group_schedule_dates.map do |d|
+      { group_schedule_date_id: d.id, choice: existing[d.id]&.choice }
+    end
+
+    @form = UserScheduleForm.new(
+      group: @group,
+      participant: @participant,
+      name: @participant.name,
+      schedules: schedules
+    )
     
   end
 
   def update
-
-    @group = Group.find_by(uuid: params[:group_uuid])
     @participant = ScheduleParticipant.find(params[:id])
-    ActiveRecord::Base.transaction do
+    @group_schedule_dates = @group.group_schedule_dates.order(:date)
+    @user_schedules = UserSchedule
+      .where(schedule_participant_id: @participant.id)
+      .index_by(&:group_schedule_date_id)
 
-      # ① schedule_participant 更新
-      @participant.update!(**schedule_participant_params)
-      
-      # ② user_schedules 用データを組み立て
-      now = Time.current
-      records = schedules_params.map do |schedule|
-        {
-          group_schedule_date_id: schedule[:group_schedule_date_id],
-          schedule_participant_id: @participant.id,
-          choice: schedule[:choice],
-          created_at: now,
-          updated_at: now
-        }
-      end
+    @form = UserScheduleForm.new(
+      group: @group,
+      participant: @participant,
+      name: schedule_participant_params[:name],
+      schedules: schedules_params
+    )
 
-      # ③ 複数日付を一括保存（重複は更新）
-      UserSchedule.upsert_all(
-        records,
-        unique_by: :index_user_schedules_on_date_and_participant
-      )
-    end
-
+    @form.save!
     redirect_to group_group_schedule_dates_path(@group), notice: "出欠を更新しました"
   rescue ActiveRecord::RecordInvalid => e
-    flash.now[:alert] = "更新に失敗しました：#{e.record.errors.full_messages.join('、')}"
+    record = e.record
+    flash.now[:alert] = "更新に失敗しました"
     render :edit, status: :unprocessable_entity
-    
   end
 
   def create
-    @group = Group.find_by(uuid: params[:group_uuid])
-    ActiveRecord::Base.transaction do
-      # ① schedule_participant 作成 or 取得
-      participant = ScheduleParticipant.create!(
-        group_id: @group.id,
-        **schedule_participant_params
-      )
-      puts ("schedule_params:" + schedules_params.inspect)
+    @group_schedule_dates = @group.group_schedule_dates.order(:date)
 
-      # ② user_schedules 用データを組み立て
-      now = Time.current
-      records = schedules_params.map do |schedule|
-        {
-          group_schedule_date_id: schedule[:group_schedule_date_id],
-          schedule_participant_id: participant.id,
-          choice: schedule[:choice],
-          created_at: now,
-          updated_at: now
-        }
-      end
+    @form = UserScheduleForm.new(
+      group: @group,
+      participant: nil,
+      name: schedule_participant_params[:name],
+      schedules: schedules_params
+    )
 
-      # ③ 複数日付を一括保存（重複は更新）
-      UserSchedule.upsert_all(
-        records,
-        unique_by: :index_user_schedules_on_date_and_participant
-      )
-    end
-
+    @form.save!
     redirect_to group_group_schedule_dates_path(@group), notice: "出欠を登録しました"
   rescue ActiveRecord::RecordInvalid => e
-    flash.now[:alert] = "登録に失敗しました：#{e.record.errors.full_messages.join('、')}"
+    # e.record が Form の場合もあるので両対応
+    record = e.record
+    flash.now[:alert] = "登録に失敗しました"
     render :new, status: :unprocessable_entity
   end
 
