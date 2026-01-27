@@ -78,5 +78,4 @@ class UserScheduleForm
       errors.add(:base, "全ての日程に○/△/×を選択してください")
     end
   end
-  
 end

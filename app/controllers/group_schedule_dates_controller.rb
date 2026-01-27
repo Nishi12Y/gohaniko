@@ -13,7 +13,7 @@ class GroupScheduleDatesController < ApplicationController
 
     # (participant_id, date_id) => choice の検索用ハッシュ
     @choice_map = schedules.each_with_object({}) do |us, h|
-      h[[us.schedule_participant_id, us.group_schedule_date_id]] = us.choice
+      h[[ us.schedule_participant_id, us.group_schedule_date_id ]] = us.choice
     end
 
     @ok_counts_by_date = UserSchedule
@@ -27,12 +27,11 @@ class GroupScheduleDatesController < ApplicationController
   end
 
   def create
-
     dates = group_schedule_dates_params[:candidate_dates].reject(&:blank?)
 
     GroupScheduleDate.transaction do
       dates.each do |d|
-        @group.group_schedule_dates.create!(date: d) 
+        @group.group_schedule_dates.create!(date: d)
       end
     end
 

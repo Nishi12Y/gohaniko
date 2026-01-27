@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :votes, only: [ :new, :create, :index ]
     resources :answers, only: [ :new, :create, :index ]
     resources :group_schedule_dates, only: [ :index, :create, :destroy ]
-    resources :user_schedules, only: [ :new, :create ,:edit, :update]
+    resources :user_schedules, only: [ :new, :create, :edit, :update ]
   end
 
   namespace :api do

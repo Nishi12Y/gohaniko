@@ -7,6 +7,6 @@ class CreateScheduleParticipants < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    add_index :schedule_participants, [:group_id, :name]
+    add_index :schedule_participants, [ :group_id, :name ]
   end
 end

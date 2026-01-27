@@ -8,6 +8,6 @@ class CreateGroupScheduleDates < ActiveRecord::Migration[7.2]
     end
 
     # 同じグループで同じ日付を候補にできないようにする
-    add_index :group_schedule_dates, [:group_id, :date], unique: true
+    add_index :group_schedule_dates, [ :group_id, :date ], unique: true
   end
 end

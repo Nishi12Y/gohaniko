@@ -31,7 +31,6 @@ class UserSchedulesController < ApplicationController
       name: @participant.name,
       schedules: schedules
     )
-    
   end
 
   def update
