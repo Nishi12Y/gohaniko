@@ -5,18 +5,17 @@
 @plugin "daisyui/theme" {
   name: "caramellatte";
   default: true;
-  --color-primary: #F19594;
+  --color-primary: #FF4807;
   /* --color-primary: #FFF7ED: */
 }
 
 @theme {
     --font-darumadrop: "Darumadrop One", sans-serif;
-    --color-header: #F8BE66;
 }
 
 @layer components {
   .header-color {
-    background-color: var(--color-header);
+    background-color: #FFF8ED;
   }
   .pink-custom-hover {
     background-color: #FF6C6A;
