@@ -15,7 +15,18 @@ export default class extends Controller {
 
         if (data.error) return;
 
-        document.getElementById(`ogp-image-${id}`).src = data.image;
+        // 画像セット
+        const img = document.getElementById(`ogp-image-${id}`)
+        img.src = data.image
+
+        // 画像ロード完了後に切り替え
+        img.onload = () => {
+          img.classList.remove("hidden")
+          document
+            .getElementById(`ogp-loading-${id}`)
+            ?.classList.add("hidden")
+        }
+        
         document.getElementById(`ogp-title-${id}`).innerText = data.title;
         document.getElementById(`ogp-description-${id}`).innerText = data.description;
       } catch (e) {
