@@ -178,6 +178,8 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
+    meta-tags (2.22.3)
+      actionpack (>= 6.0.0)
     metainspector (5.16.0)
       addressable (~> 2.8.4)
       faraday (~> 2.5)
@@ -407,6 +409,7 @@ DEPENDENCIES
   geocoder
   jbuilder
   jsbundling-rails
+  meta-tags
   metainspector
   pg (~> 1.1)
   pry
