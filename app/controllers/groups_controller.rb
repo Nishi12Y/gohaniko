@@ -38,6 +38,6 @@ class GroupsController < ApplicationController
 
     private
     def group_params
-        params.require(:group).permit(:name, :outing_schedule)
+        params.require(:group).permit(:name)
     end
 end
