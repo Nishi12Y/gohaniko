@@ -1,6 +1,5 @@
 class Group < ApplicationRecord
     validates :name, presence: true
-    validates :outing_schedule, presence: true
 
     has_many :shops, dependent: :destroy
     has_many :votes, dependent: :destroy
