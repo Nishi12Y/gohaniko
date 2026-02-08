@@ -17,8 +17,10 @@ Rails.application.routes.draw do
     member do
       get :confirmation
     end
-    resources :shops, only: [ :new, :create, :destroy ]
-    resources :votes, only: [ :new, :create, :index ]
+    resources :shops, only: [:new, :create, :destroy] do
+      resource :vote, only: [:update], controller: "shop_votes"
+    end
+    resources :votes, only: [:index ]
     resources :answers, only: [ :new, :create, :index ]
     resources :group_schedule_dates, only: [ :index, :create, :destroy ]
     resources :user_schedules, only: [ :new, :create, :edit, :update ]
