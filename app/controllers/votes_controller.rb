@@ -26,5 +26,4 @@ class VotesController < ApplicationController
 
     token
   end
-
 end
