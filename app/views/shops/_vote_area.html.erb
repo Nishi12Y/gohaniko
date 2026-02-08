@@ -1,0 +1,19 @@
+<turbo-frame id="vote_area_shop_<%= shop.id %>">
+  <div class="text-center font-medium mb-2">行きたい度を選択してください</div>
+
+  <div data-controller="autosubmit">
+    <%= form_with scope: :vote,url: group_shop_vote_path(shop.group, shop),
+                  method: :patch do |f| %>
+
+      <div class="rating rating-lg gap-2 flex justify-center mb-8">
+        <% (1..5).each do |i| %>
+          <%= f.radio_button :score, i,
+                checked: (current_score.to_i == i),
+                class: "mask mask-star-2 bg-orange-400",
+                data: { action: "change->autosubmit#submit" } %>
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+</turbo-frame>
