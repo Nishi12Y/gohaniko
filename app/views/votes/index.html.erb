@@ -5,6 +5,17 @@
       <h1 class="text-2xl font-bold">投票結果画面</h1>
       <%= link_to "グループページへ", group_path(@group), class: "btn btn-sm bg-stone-400 hover:bg-stone-500 text-white rounded-full" %>
     </div>
+    <% if @top_shops.empty? %>
+      <div class="flex justify-center py-8">
+        <div class="card header-color shadow-xl max-w-lg w-full">
+          <div class="card-body items-center text-center gap-4">
+            <div class="text-6xl opacity-50">🍽️</div>
+            <h3 class="card-title text-2xl">投票がありません</h3>
+            <p class="text-base-content/70">候補を登録して、投票してください</p>
+          </div>
+        </div>
+      </div>
+    <% end %>
 
     <% @top_shops.each_with_index do |shop, index| %>
           <%= render partial: "votes/shop_card", locals: { shop: shop , rank: index + 1} %>
