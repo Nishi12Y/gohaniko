@@ -13,18 +13,18 @@
     </div>
     <!-- タイトルセクション -->
     <div class="mb-6">
-      <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-2 mb-2">
         <h2 class="text-3xl font-bold"><%=@group.name %></h2>
-        <div data-controller="copy" data-copy-url-value="https://gohaniko.onrender.com/groups/<%= @group.uuid %>">
-          <button 
-            id="copyButton"
-            class="btn btn-outline btn-xs"
-            data-action="click->copy#copy"
-            title="コピーボタン"
-          >
-            グループリンクをコピー
-          </button>
-        </div>
+      </div>
+      <div data-controller="copy" data-copy-url-value="https://gohaniko.onrender.com/groups/<%= @group.uuid %>">
+        <button 
+          id="copyButton"
+          class="btn btn-outline btn-xs mb-5"
+          data-action="click->copy#copy"
+          title="コピーボタン"
+        >
+          グループリンクをコピー
+        </button>
       </div>
       <div class="grid grid-cols-2 gap-3 mb-4">
         <a href="<%= new_group_shop_path(@group) %>" class="btn btn-primary text-white">候補登録</a>
