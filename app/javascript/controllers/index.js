@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import AutosubmitController from "./autosubmit_controller"
+application.register("autosubmit", AutosubmitController)
+
 import ChangeViewController from "./change_view_controller"
 application.register("change-view", ChangeViewController)
 
