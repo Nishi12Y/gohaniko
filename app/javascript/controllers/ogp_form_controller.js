@@ -3,11 +3,18 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["url", "name", "address", "loading"]
 
+  // リンクからOGP情報を取得してフォームに反映する関数
   async fetchOgp() {
     const raw = this.urlTarget.value
     const normalized = this.normalizeUrl(raw)
 
     if (!normalized) return
+
+    // GoogleMapとInstagramのURLをブロック
+    if (this.isUnsupportedUrl(normalized)) {
+      alert("GoogleMap と Instagram のリンクは現在この機能に対応しておりません。")
+      return
+    }
 
     this.showLoading()
 
@@ -71,5 +78,21 @@ export default class extends Controller {
 
   hideLoading() {
     this.loadingTarget.classList.add("hidden")
+  }
+
+  // 未サポートのURLの判定関数
+  isUnsupportedUrl(url) {
+    try {
+      const parsed = new URL(url)
+      const host = parsed.hostname
+
+      return (
+        host.includes("instagram.com") ||
+        host.includes("google.com") ||
+        host.includes("goo.gl")
+      )
+    } catch {
+      return false
+    }
   }
 }
