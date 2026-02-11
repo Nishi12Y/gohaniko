@@ -1,5 +1,5 @@
 class Group < ApplicationRecord
-    validates :name, presence: true
+    validates :name, presence: true, length: { maximum: 24 }
 
     has_many :shops, dependent: :destroy
     has_many :votes, dependent: :destroy
