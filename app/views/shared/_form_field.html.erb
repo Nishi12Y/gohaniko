@@ -1,0 +1,11 @@
+<label class="form-control w-full">
+  <div class="label">
+    <span class="label-text">
+      <%= label_text %>
+      <% if required %>
+        <span class="text-error">*</span>
+      <% end %>
+    </span>
+  </div>
+  <%= yield %>
+</label>
