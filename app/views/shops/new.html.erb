@@ -35,6 +35,7 @@
             <div class="mb-6">
               <div class="block">
                 <label class="text-xl font-bold mb-3">店舗名</label>
+                <span class="text-error">*</span>
                 <button 
                     type="button" 
                     class="btn btn-outline btn-xs ml-2 mb-2" 
@@ -48,16 +49,6 @@
                   placeholder: "XXXXXXXXXXX", 
                   class: "input input-bordered w-full text-lg",
                   data: { ogp_form_target: "name" } %>
-            </div>
-
-            <!-- 場所 -->
-            <div class="mb-8">
-              <label class="block text-xl font-bold mb-3">場所</label>
-              <%= f.text_field :address, 
-                  id: "shop-address",
-                  placeholder: "XXXXXXXXXXXX", 
-                  class: "input input-bordered w-full text-lg",
-                  data: { ogp_form_target: "address" } %>
             </div>
           </div>
 
