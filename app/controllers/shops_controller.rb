@@ -25,6 +25,6 @@ class ShopsController < ApplicationController
 
   def shop_params
     # params.require(:shop).permit(:name, :address, :url)
-    params.require(:shop).permit(:name, :address, :url).merge(group_id: params[:group_id])
+    params.require(:shop).permit(:name, :url).merge(group_id: params[:group_id])
   end
 end
