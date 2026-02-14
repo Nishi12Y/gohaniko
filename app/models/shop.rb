@@ -1,5 +1,6 @@
 class Shop < ApplicationRecord
   validates :name, presence: true
+  validates :url, uniqueness: { scope: :group_id }, allow_blank: true
 
   belongs_to :group
 
