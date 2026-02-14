@@ -1,0 +1,19 @@
+ja:
+  activerecord:
+    models:
+      group: グループ
+      shop: 店舗
+      user_schedules: ユーザースケジュール
+      schedule_participant: スケジュール参加者
+    attributes:
+      group:
+        name: グループ名
+      shop:
+        name: 店舗名
+        url: 店舗URL
+  activemodel:
+    models:
+      user_schedule_form: 出欠フォーム
+    attributes:
+      user_schedule_form:
+        name: 名前
