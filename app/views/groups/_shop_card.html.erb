@@ -1,4 +1,6 @@
-<div id="ogp-preview-<%= shop.id %>" data-url="<%= shop.url %>" class="card bg-base-100 shadow-md mb-4 relative">
+<div id="ogp-preview-<%= shop.id %>" data-url="<%= shop.url %>" class="card bg-base-100 shadow-md mb-4 relative" data-controller="scroll-reveal card-animate"
+  data-action="mousedown->card-animate#tap touchstart->card-animate#tap"
+  data-index="<%= local_assigns[:index]  %>">
   <!-- 削除ボタン -->
   <%= button_to group_shop_path(shop.group,shop), method: :delete, 
       class: "btn btn-ghost btn-sm btn-circle absolute top-2 right-2 text-error hover:bg-error hover:text-white",

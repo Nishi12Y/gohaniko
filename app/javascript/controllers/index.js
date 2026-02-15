@@ -7,6 +7,9 @@ import { application } from "./application"
 import AutosubmitController from "./autosubmit_controller"
 application.register("autosubmit", AutosubmitController)
 
+import CardAnimateController from "./card_animate_controller"
+application.register("card-animate", CardAnimateController)
+
 import ChangeViewController from "./change_view_controller"
 application.register("change-view", ChangeViewController)
 
@@ -36,3 +39,6 @@ application.register("ogp-form", OgpFormController)
 
 import PageTransitionController from "./page_transition_controller"
 application.register("page-transition", PageTransitionController)
+
+import ScrollRevealController from "./scroll_reveal_controller"
+application.register("scroll-reveal", ScrollRevealController)
