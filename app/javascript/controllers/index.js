@@ -33,3 +33,6 @@ application.register("ogp", OgpController)
 
 import OgpFormController from "./ogp_form_controller"
 application.register("ogp-form", OgpFormController)
+
+import PageTransitionController from "./page_transition_controller"
+application.register("page-transition", PageTransitionController)

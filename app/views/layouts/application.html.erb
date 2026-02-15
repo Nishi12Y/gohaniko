@@ -30,7 +30,7 @@
     <%= display_meta_tags(default_meta_tags) %>
   </head>
 
-  <body class="bg-base-200 min-h-screen">
+  <body class="bg-base-200 min-h-screen" data-controller="page-transition">
     <%= render 'shared/header' %>
     <%= render 'shared/flash_message' %>
     <%= yield %>
