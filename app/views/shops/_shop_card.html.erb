@@ -1,0 +1,49 @@
+<div id="ogp-preview-<%= shop.id %>" data-url="<%= shop.url %>" class="card bg-base-100 shadow-md mb-4 relative" 
+  data-controller="ogp scroll-reveal card-animate"
+  data-action="mousedown->card-animate#tap touchstart->card-animate#tap"
+  data-index="<%= local_assigns[:index]  %>">
+  <!-- 削除ボタン -->
+  <% if delete_button%>
+    <%= button_to group_shop_path(shop.group,shop), method: :delete, 
+        class: "btn btn-ghost btn-sm btn-circle absolute top-2 right-2 text-error hover:bg-error hover:text-white",
+        data: { turbo_confirm: "本当に削除しますか？" } do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+      </svg>
+    <% end %>
+  <% end %>
+
+  <div class="card-body p-4">
+    <ul class="text-sm space-y-1 mb-3">
+      <li class="break-words" style="padding-right: 2.5rem;">店舗名: <%= shop.name %></li>
+    </ul>
+
+    <!-- URLプレビュー -->
+    <a href="<%= shop.url %>" target="_blank" class="block rounded overflow-hidden border border-base-300 hover:shadow-md transition">
+      <div class="rounded overflow-hidden border border-base-300">
+        <div class="relative w-full aspect-video">
+          <!-- ローディング -->
+          <div 
+            id="ogp-loading-<%= shop.id %>"
+            class="absolute inset-0 flex items-center justify-center"
+          >
+            <span class="loading loading-spinner loading-lg text-primary"></span>
+          </div>
+
+          <!-- OGP画像 -->
+          <img 
+            id="ogp-image-<%= shop.id %>" 
+            class="w-full h-full object-cover hidden"
+          />
+        </div>
+        <div class="p-3">
+          <div id="ogp-title-<%= shop.id %>" class="font-bold text-sm mb-1"></div>
+          <div id="ogp-description-<%= shop.id %>" class="text-xs text-gray-500"></div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<% if vote %>
+  <%= render "shops/vote_area", shop: shop, current_score: @votes[shop.id] %>
+<% end %>

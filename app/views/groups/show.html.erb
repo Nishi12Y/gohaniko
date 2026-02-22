@@ -1,9 +1,8 @@
 <!-- app/views/stores/index.html.erb -->
 <body class="bg-base-200 min-h-screen">
   <!-- メインコンテンツ -->
-  <%# TODO:パーシャルの方に、data-controller="ogp"を移動させる %>
-  <main class="container mx-auto px-4 py-6 max-w-md" data-controller="ogp change-view">
-    <%# TODO:sharedのフラッシュメッセージを使えるか調査 %>
+  <main class="container mx-auto px-4 py-6 max-w-md" data-controller="change-view">
+    <%= render "shared/flash_message" %>
     <!-- フラッシュメッセージ -->
     <div id="flash-message" class="hidden fixed top-0 left-0 right-0 z-50">
       <div class="alert shadow-lg">
@@ -63,7 +62,7 @@
     <!-- 候補一覧 -->
     <div data-change-view-target="listView">
       <% @shops.each do |shop| %>
-        <%= render partial: "shop_card", locals: { shop: shop } %>
+        <%= render partial: "shops/shop_card", locals: { shop: shop, delete_button: true, vote: true } %>
       <% end %>
     </div>
 

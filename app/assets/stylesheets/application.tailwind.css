@@ -72,3 +72,87 @@
 .gm-iw__title { font-weight: 700; margin-right: 24px; }
 .gm-iw__addr { font-size: 12px; }
 .gm-iw__link { margin-top: 6px; }
+
+/* --- Page transition --- */
+.page-transition {
+  /* クリック連打でカクつくのを抑えたい場合は入れてOK（好み） */
+  will-change: opacity, transform;
+}
+
+/* Enter (after render) */
+.page-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Leave (before render) */
+.page-leave {
+  opacity: 1;
+  transform: translateY(0);
+}
+.page-leave-active {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* OS設定「視差効果を減らす」尊重 */
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active {
+    transition: none !important;
+  }
+}
+
+/* ===== shop card animation ===== */
+.shop-card {
+  will-change: opacity, transform;
+}
+
+/* appear */
+.shop-card--enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.shop-card--enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* tap */
+.shop-card--tap {
+  transform: scale(0.98);
+  transition: transform 0.12s ease;
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .shop-card--enter-active {
+    transition: none !important;
+  }
+}
+
+/* ===== scroll appear ===== */
+.shop-card {
+  opacity: 0;
+  transform: translateY(8px);
+  will-change: opacity, transform;
+}
+
+.shop-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-card.is-visible {
+    transition: none !important;
+  }
+}
